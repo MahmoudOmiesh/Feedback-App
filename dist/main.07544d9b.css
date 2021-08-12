@@ -1,0 +1,17 @@
+:root {
+  --clr-primary-100: #7c91f9;
+  --clr-primary-200: #647196;
+  --clr-primary-300: #3a4374;
+  --clr-accent-100: #f49f85;
+  --clr-accent-200: #ad1fea;
+  --clr-accent-300: #62bcfa;
+  --clr-neutral-100: #f7f8fd;
+  --clr-neutral-200: #f2f4ff;
+  --clr-neutral-300: #cfd7ff;
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+  --ff-main: "Jost", sans-serif;
+}
+
+/*# sourceMappingURL=/main.07544d9b.css.map */

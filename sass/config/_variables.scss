@@ -1,0 +1,41 @@
+$colors: (
+	'primary': (
+		'100': #7c91f9,
+		//blue hover
+		'200': #647196,
+		//text primary
+		'300': #3a4374,
+		//dark blue
+	),
+	'accent': (
+		'100': #f49f85,
+		//planned
+		'200': #ad1fea,
+		//in progress
+		'300': #62bcfa,
+		//live
+	),
+	'neutral': (
+		'100': #f7f8fd,
+		//light bg
+		'200': #f2f4ff,
+		//lighter bg
+		'300': #cfd7ff,
+		// light blue
+	),
+);
+
+$font-weights: (
+	'normal': 400,
+	'medium': 500,
+	'bold': 700,
+);
+
+$font-families: (
+	'main': Jost,
+);
+
+$breakpoints: (
+	'medium': 65em,
+	'large': 90em,
+);
