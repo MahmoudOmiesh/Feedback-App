@@ -6,6 +6,7 @@ $colors: (
 		//text primary
 		'300': #3a4374,
 		//dark blue
+		'400': #4661e6,
 	),
 	'accent': (
 		'100': #f49f85,
@@ -16,11 +17,12 @@ $colors: (
 		//live
 	),
 	'neutral': (
-		'100': #f7f8fd,
+		'100': #ffffff,
+		'200': #f7f8fd,
 		//light bg
-		'200': #f2f4ff,
+		'300': #f2f4ff,
 		//lighter bg
-		'300': #cfd7ff,
+		'400': #cfd7ff,
 		// light blue
 	),
 );

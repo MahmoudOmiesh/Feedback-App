@@ -1,0 +1,27 @@
+.tag {
+	color: var(--clr-primary-400);
+	background-color: var(--clr-neutral-300);
+	padding: 0.5em 0.75em;
+	font-weight: var(--fw-medium);
+	font-size: 0.9rem;
+	text-transform: capitalize;
+	text-align: center;
+	border-radius: 0.5em;
+	cursor: pointer;
+	display: inline-block;
+	transition: background-color 175ms ease-in, color 175ms ease-in;
+
+	&:hover {
+		background-color: var(--clr-primary-400);
+		color: var(--clr-neutral-300);
+	}
+
+	&.active {
+		background-color: var(--clr-primary-400);
+		color: var(--clr-neutral-300);
+	}
+
+	&:nth-child(4) {
+		grid-column: 1 / 3;
+	}
+}
