@@ -117,13 +117,382 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"js/main.js":[function(require,module,exports) {
-var selectedText = document.querySelector('.selectlist__selected');
-var options = document.querySelector('.selectlist__options');
-selectedText.addEventListener('click', function () {
-  options.classList.toggle('active');
+})({"data/data.json":[function(require,module,exports) {
+module.exports = {
+  "currentUser": {
+    "image": "user-images/image-zena.jpg",
+    "name": "Zena Kelley",
+    "username": "velvetround"
+  },
+  "productRequests": [{
+    "id": 1,
+    "title": "Add tags for solutions",
+    "category": "enhancement",
+    "upvotes": 112,
+    "status": "suggestion",
+    "description": "Easier to search for solutions based on a specific stack.",
+    "comments": [{
+      "id": 1,
+      "content": "Awesome idea! Trying to find framework-specific projects within the hubs can be tedious",
+      "user": {
+        "image": "user-images/image-suzanne.jpg",
+        "name": "Suzanne Chang",
+        "username": "upbeat1811"
+      }
+    }, {
+      "id": 2,
+      "content": "Please use fun, color-coded labels to easily identify them at a glance",
+      "user": {
+        "image": "user-images/image-thomas.jpg",
+        "name": "Thomas Hood",
+        "username": "brawnybrave"
+      }
+    }]
+  }, {
+    "id": 2,
+    "title": "Add a dark theme option",
+    "category": "feature",
+    "upvotes": 99,
+    "status": "suggestion",
+    "description": "It would help people with light sensitivities and who prefer dark mode.",
+    "comments": [{
+      "id": 3,
+      "content": "Also, please allow styles to be applied based on system preferences. I would love to be able to browse Frontend Mentor in the evening after my device’s dark mode turns on without the bright background it currently has.",
+      "user": {
+        "image": "user-images/image-elijah.jpg",
+        "name": "Elijah Moss",
+        "username": "hexagon.bestagon"
+      }
+    }, {
+      "id": 4,
+      "content": "Second this! I do a lot of late night coding and reading. Adding a dark theme can be great for preventing eye strain and the headaches that result. It’s also quite a trend with modern apps and  apparently saves battery life.",
+      "user": {
+        "image": "user-images/image-james.jpg",
+        "name": "James Skinner",
+        "username": "hummingbird1"
+      },
+      "replies": [{
+        "content": "While waiting for dark mode, there are browser extensions that will also do the job. Search for 'dark theme' followed by your browser. There might be a need to turn off the extension for sites with naturally black backgrounds though.",
+        "replyingTo": "hummingbird1",
+        "user": {
+          "image": "user-images/image-anne.jpg",
+          "name": "Anne Valentine",
+          "username": "annev1990"
+        }
+      }, {
+        "content": "Good point! Using any kind of style extension is great and can be highly customizable, like the ability to change contrast and brightness. I'd prefer not to use one of such extensions, however, for security and privacy reasons.",
+        "replyingTo": "annev1990",
+        "user": {
+          "image": "user-images/image-ryan.jpg",
+          "name": "Ryan Welles",
+          "username": "voyager.344"
+        }
+      }]
+    }]
+  }, {
+    "id": 3,
+    "title": "Q&A within the challenge hubs",
+    "category": "feature",
+    "upvotes": 65,
+    "status": "suggestion",
+    "description": "Challenge-specific Q&A would make for easy reference.",
+    "comments": [{
+      "id": 5,
+      "content": "Much easier to get answers from devs who can relate, since they've either finished the challenge themselves or are in the middle of it.",
+      "user": {
+        "image": "user-images/image-george.jpg",
+        "name": "George Partridge",
+        "username": "soccerviewer8"
+      }
+    }]
+  }, {
+    "id": 4,
+    "title": "Add image/video upload to feedback",
+    "category": "enhancement",
+    "upvotes": 51,
+    "status": "suggestion",
+    "description": "Images and screencasts can enhance comments on solutions.",
+    "comments": [{
+      "id": 6,
+      "content": "Right now, there is no ability to add images while giving feedback which isn't ideal because I have to use another app to show what I mean",
+      "user": {
+        "image": "user-images/image-javier.jpg",
+        "name": "Javier Pollard",
+        "username": "warlikeduke"
+      }
+    }, {
+      "id": 7,
+      "content": "Yes I'd like to see this as well. Sometimes I want to add a short video or gif to explain the site's behavior..",
+      "user": {
+        "image": "user-images/image-roxanne.jpg",
+        "name": "Roxanne Travis",
+        "username": "peppersprime32"
+      }
+    }]
+  }, {
+    "id": 5,
+    "title": "Ability to follow others",
+    "category": "feature",
+    "upvotes": 42,
+    "status": "suggestion",
+    "description": "Stay updated on comments and solutions other people post.",
+    "comments": [{
+      "id": 8,
+      "content": "I also want to be notified when devs I follow submit projects on FEM. Is in-app notification also in the pipeline?",
+      "user": {
+        "image": "user-images/image-victoria.jpg",
+        "name": "Victoria Mejia",
+        "username": "arlen_the_marlin"
+      },
+      "replies": [{
+        "content": "Bumping this. It would be good to have a tab with a feed of people I follow so it's easy to see what challenges they’ve done lately. I learn a lot by reading good developers' code.",
+        "replyingTo": "arlen_the_marlin",
+        "user": {
+          "image": "user-images/image-zena.jpg",
+          "name": "Zena Kelley",
+          "username": "velvetround"
+        }
+      }]
+    }, {
+      "id": 9,
+      "content": "I've been saving the profile URLs of a few people and I check what they’ve been doing from time to time. Being able to follow them solves that",
+      "user": {
+        "image": "user-images/image-jackson.jpg",
+        "name": "Jackson Barker",
+        "username": "countryspirit"
+      }
+    }]
+  }, {
+    "id": 6,
+    "title": "Preview images not loading",
+    "category": "bug",
+    "upvotes": 3,
+    "status": "suggestion",
+    "description": "Challenge preview images are missing when you apply a filter."
+  }, {
+    "id": 7,
+    "title": "More comprehensive reports",
+    "category": "feature",
+    "upvotes": 123,
+    "status": "planned",
+    "description": "It would be great to see a more detailed breakdown of solutions.",
+    "comments": [{
+      "id": 10,
+      "content": "This would be awesome! It would be so helpful to see an overview of my code in a way that makes it easy to spot where things could be improved.",
+      "user": {
+        "image": "user-images/image-victoria.jpg",
+        "name": "Victoria Mejia",
+        "username": "arlen_the_marlin"
+      }
+    }, {
+      "id": 11,
+      "content": "Yeah, this would be really good. I'd love to see deeper insights into my code!",
+      "user": {
+        "image": "user-images/image-jackson.jpg",
+        "name": "Jackson Barker",
+        "username": "countryspirit"
+      }
+    }]
+  }, {
+    "id": 8,
+    "title": "Learning paths",
+    "category": "feature",
+    "upvotes": 28,
+    "status": "planned",
+    "description": "Sequenced projects for different goals to help people improve.",
+    "comments": [{
+      "id": 12,
+      "content": "Having a path through the challenges that I could follow would be brilliant! Sometimes I'm not sure which challenge would be the best next step to take. So this would help me navigate through them!",
+      "user": {
+        "image": "user-images/image-george.jpg",
+        "name": "George Partridge",
+        "username": "soccerviewer8"
+      }
+    }]
+  }, {
+    "id": 9,
+    "title": "One-click portfolio generation",
+    "category": "feature",
+    "upvotes": 62,
+    "status": "in-progress",
+    "description": "Add ability to create professional looking portfolio from profile.",
+    "comments": [{
+      "id": 13,
+      "content": "I haven't built a portfolio site yet, so this would be really helpful. Might it also be possible to choose layout and colour themes?!",
+      "user": {
+        "image": "user-images/image-ryan.jpg",
+        "name": "Ryan Welles",
+        "username": "voyager.344"
+      }
+    }]
+  }, {
+    "id": 10,
+    "title": "Bookmark challenges",
+    "category": "feature",
+    "upvotes": 31,
+    "status": "in-progress",
+    "description": "Be able to bookmark challenges to take later on.",
+    "comments": [{
+      "id": 14,
+      "content": "This would be great! At the moment, I'm just starting challenges in order to save them. But this means the My Challenges section is overflowing with projects and is hard to manage. Being able to bookmark challenges would be really helpful.",
+      "user": {
+        "image": "user-images/image-suzanne.jpg",
+        "name": "Suzanne Chang",
+        "username": "upbeat1811"
+      }
+    }]
+  }, {
+    "id": 11,
+    "title": "Animated solution screenshots",
+    "category": "bug",
+    "upvotes": 9,
+    "status": "in-progress",
+    "description": "Screenshots of solutions with animations don’t display correctly."
+  }, {
+    "id": 12,
+    "title": "Add micro-interactions",
+    "category": "enhancement",
+    "upvotes": 71,
+    "status": "live",
+    "description": "Small animations at specific points can add delight.",
+    "comments": [{
+      "id": 15,
+      "content": "I'd love to see this! It always makes me so happy to see little details like these on websites.",
+      "user": {
+        "image": "user-images/image-victoria.jpg",
+        "name": "Victoria Mejia",
+        "username": "arlen_the_marlin"
+      },
+      "replies": [{
+        "content": "Me too! I'd also love to see celebrations at specific points as well. It would help people take a moment to celebrate their achievements!",
+        "replyingTo": "arlen_the_marlin",
+        "user": {
+          "image": "user-images/image-suzanne.jpg",
+          "name": "Suzanne Chang",
+          "username": "upbeat1811"
+        }
+      }]
+    }]
+  }]
+};
+},{}],"assets/shared/icon-arrow-up.svg":[function(require,module,exports) {
+module.exports = "/icon-arrow-up.15c07bf3.svg";
+},{}],"assets/shared/icon-comments.svg":[function(require,module,exports) {
+module.exports = "/icon-comments.55e7345e.svg";
+},{}],"js/showPosts.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-},{}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+exports.default = _default;
+
+var _iconArrowUp = _interopRequireDefault(require("../assets/shared/icon-arrow-up.svg"));
+
+var _iconComments = _interopRequireDefault(require("../assets/shared/icon-comments.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _default(posts) {
+  var postsContainer = document.querySelector('.posts__body');
+  posts.forEach(function (post) {
+    var postDiv = document.createElement('div');
+    postDiv.classList.add('post');
+    postDiv.innerHTML = "\n    <div class=\"post__upvote\">\n      <img src=\"".concat(_iconArrowUp.default, "\" alt=\"Upvote\" />\n      ").concat(post.upvotes, "\n    </div>\n\n    <div class=\"post__content\">\n      <h1 class=\"post__title\">").concat(post.title, "</h1>\n      <p class=\"post__text\">").concat(post.description, "</p>\n      <div class=\"tag\">").concat(post.category, "</div>\n    </div>\n\n    <div class=\"post__replies\">\n      <img src=\"").concat(_iconComments.default, "\" alt=\"Replies\" />\n      <span>\n        ").concat(post.comments ? post.comments.length : 0, "\n      </span>\n    </div>\n    ");
+    postsContainer.appendChild(postDiv);
+  });
+}
+},{"../assets/shared/icon-arrow-up.svg":"assets/shared/icon-arrow-up.svg","../assets/shared/icon-comments.svg":"assets/shared/icon-comments.svg"}],"assets/suggestions/illustration-empty.svg":[function(require,module,exports) {
+module.exports = "/illustration-empty.daaa623c.svg";
+},{}],"js/filterPosts.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = filterPosts;
+
+var _illustrationEmpty = _interopRequireDefault(require("../assets/suggestions/illustration-empty.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function filterPosts(filterText, clickedTag) {
+  var postsContainer = document.querySelector('.posts__body');
+  var postTags = document.querySelectorAll('.post .tag');
+
+  var allPosts = _toConsumableArray(document.querySelectorAll('.post'));
+
+  var activeTag = document.querySelector('.filter .tag.active');
+  activeTag.classList.remove('active');
+  clickedTag.classList.add('active');
+  allPosts.forEach(function (post) {
+    return post.style.display = 'none';
+  });
+  if (document.querySelector('.none')) document.querySelector('.none').remove();
+
+  if (filterText === 'all') {
+    allPosts.forEach(function (post) {
+      return post.style.display = 'flex';
+    });
+  }
+
+  postTags.forEach(function (tag) {
+    if ("".concat(filterText.toLowerCase()) === tag.textContent.toLowerCase()) {
+      var filteredPost = tag.parentElement.parentElement;
+      filteredPost.style.display = 'flex';
+    }
+  });
+
+  if (allPosts.every(function (post) {
+    return post.style.display === 'none';
+  })) {
+    var noneDiv = document.createElement('div');
+    noneDiv.classList.add('none');
+    noneDiv.innerHTML = "\n\t\t<img src=\".".concat(_illustrationEmpty.default, "\" alt=\"None Found\" />\n\t\t<h1 class='none__title'>There is no ").concat(filterText, " feedback yet.</h1>\n\t\t<p class='none__text'>\n\t\t\tGot a suggestion? Found a bug that needs to be squashed? We love hearing\n\t\t\tabout new ideas to improve our app.\n\t\t</p>\n\t\t<button class='btn btn-primary btn-add'>Add Feedback</button>\n\t\t");
+    if (document.querySelector('.none')) document.querySelector('.none').remove();
+    postsContainer.appendChild(noneDiv);
+  }
+}
+},{"../assets/suggestions/illustration-empty.svg":"assets/suggestions/illustration-empty.svg"}],"js/main.js":[function(require,module,exports) {
+"use strict";
+
+var _data = _interopRequireDefault(require("../data/data"));
+
+var _showPosts = _interopRequireDefault(require("./showPosts"));
+
+var _filterPosts = _interopRequireDefault(require("./filterPosts"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var suggestionPosts = _data.default.productRequests.filter(function (post) {
+  return post.status === 'suggestion';
+});
+
+var filterTags = document.querySelectorAll('.filter .tag');
+(0, _showPosts.default)(suggestionPosts);
+filterTags.forEach(function (tag) {
+  tag.addEventListener('click', function (e) {
+    return (0, _filterPosts.default)(tag.textContent, e.target);
+  });
+}); // REFACTOR
+// const selectedText = document.querySelector('.selectlist__selected');
+// const options = document.querySelector('.selectlist__options');
+// selectedText.addEventListener('click', () => {
+// 	options.classList.toggle('active');
+// });
+},{"../data/data":"data/data.json","./showPosts":"js/showPosts.js","./filterPosts":"js/filterPosts.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -151,7 +520,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54914" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62421" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

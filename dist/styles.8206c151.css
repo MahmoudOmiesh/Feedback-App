@@ -247,6 +247,27 @@ body {
   gap: 0.65em;
 }
 
+.none {
+  text-align: center;
+  background-color: var(--clr-neutral-100);
+  border-radius: 0.5em;
+  padding: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.none__title {
+  color: var(--clr-primary-300);
+  text-transform: capitalize;
+  font-size: 1.15rem;
+}
+.none__text {
+  color: var(--clr-primary-200);
+  font-size: 1rem;
+  margin: 0.65em 0 0.85em 0;
+}
+
 .main {
   padding: 5em 0 0 0;
   max-width: 70rem;
@@ -254,6 +275,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 2em;
+  margin-bottom: 4em;
 }
 
 .dashboard > * + * {
