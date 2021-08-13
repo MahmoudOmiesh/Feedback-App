@@ -199,6 +199,54 @@ body {
   left: 2.25em;
 }
 
+.post {
+  padding: 1.5em;
+  background-color: var(--clr-neutral-100);
+  border-radius: 0.5em;
+  display: flex;
+  gap: 2em;
+  align-items: flex-start;
+}
+.post + .post {
+  margin-top: 2em;
+}
+.post__upvote {
+  padding: 0.8em;
+  background-color: var(--clr-neutral-300);
+  border-radius: 0.5em;
+  font-weight: var(--fw-bold);
+  color: var(--clr-primary-300);
+  font-size: 0.85rem;
+  transition: background-color 170ms ease-in-out;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.post__upvote:hover {
+  background-color: var(--clr-neutral-400);
+}
+.post__title {
+  color: var(--clr-primary-300);
+  text-transform: capitalize;
+  font-size: 1.15rem;
+}
+.post__text {
+  color: var(--clr-primary-200);
+  font-size: 1rem;
+  margin: 0.65em 0 0.85em 0;
+}
+.post__replies {
+  align-self: center;
+  margin-left: auto;
+  font-weight: var(--fw-bold);
+  display: flex;
+  align-items: center;
+  gap: 0.65em;
+}
+
 .main {
   padding: 5em 0 0 0;
   max-width: 70rem;
