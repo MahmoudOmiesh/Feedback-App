@@ -1,0 +1,24 @@
+.posts {
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: 2em;
+		background-color: var(--clr-primary-300);
+		padding: 1.5em 2.5em;
+		border-radius: 0.5em;
+		color: var(--clr-neutral-100);
+		margin-bottom: 2em;
+
+		&-suggestion {
+			display: flex;
+			align-items: center;
+			gap: 0.5em;
+			font-weight: var(--fw-bold);
+			font-size: 1.25rem;
+		}
+
+		.btn {
+			margin-left: auto;
+		}
+	}
+}

@@ -10,7 +10,7 @@
 			href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap"
 			rel="stylesheet"
 		/>
-		<script src="js/main.js"></script>
+		<script src="js/main.js" defer></script>
 		<link rel="stylesheet" href="sass/styles.scss" />
 		<title>Feedback app</title>
 	</head>
@@ -60,15 +60,21 @@
 							src="assets/suggestions/icon-suggestions.svg"
 							alt="Suggestions"
 						/>
-						<p><span>6</span>Suggestions</p>
+						<p><span>6</span> Suggestions</p>
 					</div>
 					<div class="selectlist">
-						<p class="selectlist__text">
+						<p class="selectlist__content">
 							<span class="selectlist__text">Sort By : </span>
-							<span class="selctlist__selected">Most Upvotes</span>
+							<span class="selectlist__selected">Most Upvotes</span>
 						</p>
-					</div>
 
+						<ul class="selectlist__options">
+							<li class="active">Most Upvotes</li>
+							<li>Least Upvotes</li>
+							<li>Most Comments</li>
+							<li>Least Comments</li>
+						</ul>
+					</div>
 					<button class="btn btn-primary btn-add">Add Feedback</button>
 				</div>
 

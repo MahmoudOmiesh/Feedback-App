@@ -7,7 +7,7 @@
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 		<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&display=swap" rel="stylesheet">
-		<script src="/main.fb6bbcaf.js"></script>
+		<script src="/main.fb6bbcaf.js" defer=""></script>
 		<link rel="stylesheet" href="/styles.8206c151.css">
 		<title>Feedback app</title>
 	<script src="/styles.8206c151.js"></script></head>
@@ -51,15 +51,21 @@
 				<div class="posts__header">
 					<div class="posts__header-suggestion">
 						<img src="/icon-suggestions.9d320eee.svg" alt="Suggestions">
-						<p><span>6</span>Suggestions</p>
+						<p><span>6</span> Suggestions</p>
 					</div>
 					<div class="selectlist">
-						<p class="selectlist__text">
+						<p class="selectlist__content">
 							<span class="selectlist__text">Sort By : </span>
-							<span class="selctlist__selected">Most Upvotes</span>
+							<span class="selectlist__selected">Most Upvotes</span>
 						</p>
-					</div>
 
+						<ul class="selectlist__options">
+							<li class="active">Most Upvotes</li>
+							<li>Least Upvotes</li>
+							<li>Most Comments</li>
+							<li>Least Comments</li>
+						</ul>
+					</div>
 					<button class="btn btn-primary btn-add">Add Feedback</button>
 				</div>
 

@@ -1,0 +1,61 @@
+.selectlist {
+	position: relative;
+
+	&__text {
+		font-size: 0.9rem;
+		font-weight: var(--fw-medium);
+		color: var(--clr-neutral-300);
+	}
+
+	&__selected {
+		font-size: 0.95rem;
+		font-weight: var(--fw-bold);
+		cursor: pointer;
+	}
+
+	&__options {
+		opacity: 0;
+		transform: scaleY(0);
+		transition: opacity 170ms ease-in-out, transform 170ms ease-in-out 50ms;
+		transform-origin: top;
+		position: absolute;
+		background-color: var(--clr-neutral-100);
+		color: var(--clr-primary-200);
+		font-weight: var(--fw-medium);
+		font-size: 1rem;
+		border-radius: 0.5em;
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		width: 200px;
+		left: 50%;
+		top: 150%;
+		box-shadow: 0 0 15px -5px rgba(53, 53, 53, 0.836);
+
+		&.active {
+			opacity: 1;
+			transform: scaleY(1);
+		}
+
+		li {
+			padding: 0.45em 1em;
+			border-bottom: 1px solid var(--clr-neutral-400);
+			cursor: pointer;
+			transition: color 170ms ease-in;
+
+			&:last-child {
+				border: 0;
+			}
+
+			&:hover {
+				color: var(--clr-accent-200);
+			}
+
+			&.active {
+				@include pseudo(after, url(../assets/shared/icon-check.svg)) {
+					right: 1em;
+				}
+			}
+		}
+	}
+}

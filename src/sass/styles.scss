@@ -3,6 +3,9 @@
 @import 'config/config';
 @import 'base/reset';
 @import 'base/base';
-@import 'components/Tag';
+@import 'components/tag';
+@import 'components/selectList';
+@import 'components/button';
 @import 'layout/main';
 @import 'layout/dashboard';
+@import 'layout/posts';

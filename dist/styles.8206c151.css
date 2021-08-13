@@ -118,13 +118,94 @@ body {
   grid-column: 1/3;
 }
 
+.selectlist {
+  position: relative;
+}
+.selectlist__text {
+  font-size: 0.9rem;
+  font-weight: var(--fw-medium);
+  color: var(--clr-neutral-300);
+}
+.selectlist__selected {
+  font-size: 0.95rem;
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.selectlist__options {
+  opacity: 0;
+  transform: scaleY(0);
+  transition: opacity 170ms ease-in-out, transform 170ms ease-in-out 50ms;
+  transform-origin: top;
+  position: absolute;
+  background-color: var(--clr-neutral-100);
+  color: var(--clr-primary-200);
+  font-weight: var(--fw-medium);
+  font-size: 1rem;
+  border-radius: 0.5em;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  width: 200px;
+  left: 50%;
+  top: 150%;
+  box-shadow: 0 0 15px -5px rgba(53, 53, 53, 0.836);
+}
+.selectlist__options.active {
+  opacity: 1;
+  transform: scaleY(1);
+}
+.selectlist__options li {
+  padding: 0.45em 1em;
+  border-bottom: 1px solid var(--clr-neutral-400);
+  cursor: pointer;
+  transition: color 170ms ease-in;
+}
+.selectlist__options li:last-child {
+  border: 0;
+}
+.selectlist__options li:hover {
+  color: var(--clr-accent-200);
+}
+.selectlist__options li.active {
+  position: relative;
+}
+.selectlist__options li.active::after {
+  position: absolute;
+  content: url(/icon-check.7ae9490b.svg);
+  right: 1em;
+}
+
+.btn {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--clr-neutral-100);
+  padding: 0.65em 2.5em;
+  border-radius: 0.35em;
+  border: 0;
+  outline: 0;
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+.btn.btn-primary {
+  background-color: var(--clr-accent-200);
+}
+.btn.btn-add {
+  padding-left: 3.25em;
+  position: relative;
+}
+.btn.btn-add::before {
+  position: absolute;
+  content: url(/icon-plus.0ced3111.svg);
+  left: 2.25em;
+}
+
 .main {
   padding: 5em 0 0 0;
   max-width: 70rem;
   margin-inline: auto;
   display: grid;
   grid-template-columns: 1fr 3fr;
-  gap: 3em;
+  gap: 2em;
 }
 
 .dashboard > * + * {
@@ -185,7 +266,6 @@ body {
 .roadmap__list li::before {
   position: absolute;
   content: "";
-  left: 0;
   height: 8px;
   width: 8px;
   border-radius: 50%;
@@ -206,6 +286,27 @@ body {
 }
 .roadmap__count {
   font-weight: var(--fw-bold);
+}
+
+.posts__header {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  background-color: var(--clr-primary-300);
+  padding: 1.5em 2.5em;
+  border-radius: 0.5em;
+  color: var(--clr-neutral-100);
+  margin-bottom: 2em;
+}
+.posts__header-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: var(--fw-bold);
+  font-size: 1.25rem;
+}
+.posts__header .btn {
+  margin-left: auto;
 }
 
 /*# sourceMappingURL=/styles.8206c151.css.map */
