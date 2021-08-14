@@ -32,21 +32,21 @@
 				<div class="roadmap">
 					<div class="roadmap__header">
 						<h1 class="roadmap__title">roadmap</h1>
-						<a href="#" class="roadmap__link">View</a>
+						<button class="roadmap__link">View</button>
 					</div>
 					<div class="roadmap__content">
 						<ul class="roadmap__list">
 							<li>
 								<span class="roadmap__type">Planned</span
-								><span class="roadmap__count">1</span>
+								><span class="roadmap__count"></span>
 							</li>
 							<li>
 								<span class="roadmap__type">In-Progress</span
-								><span class="roadmap__count">2</span>
+								><span class="roadmap__count"></span>
 							</li>
 							<li>
 								<span class="roadmap__type">Live</span
-								><span class="roadmap__count">3</span>
+								><span class="roadmap__count"></span>
 							</li>
 						</ul>
 					</div>
@@ -60,7 +60,7 @@
 							src="assets/suggestions/icon-suggestions.svg"
 							alt="Suggestions"
 						/>
-						<p><span>6</span> Suggestions</p>
+						<p><span></span> Suggestions</p>
 					</div>
 					<div class="selectlist">
 						<p class="selectlist__content">
@@ -86,5 +86,33 @@
 				<div class="posts__body"></div>
 			</section>
 		</main>
+
+		<section class="roadmapposts">
+			<div class="roadmapposts__header">
+				<div>
+					<button class="btn btn-transparent btn-back">go back</button>
+					<h1 class="roadmapposts__name">Roadmap</h1>
+				</div>
+				<button class="btn btn-primary btn-add">Add Feedback</button>
+			</div>
+
+			<section class="roadmapposts__body">
+				<div class="planned roadmapposts__section">
+					<h2 class="roadmapposts__title">Planned</h2>
+					<p class="roadmapposts__subtitle">Ideas prioritized for research</p>
+					<div class="roadmapposts__content"></div>
+				</div>
+				<div class="inprogress roadmapposts__section">
+					<h2 class="roadmapposts__title">In-Progress</h2>
+					<p class="roadmapposts__subtitle">Currently being developed</p>
+					<div class="roadmapposts__content"></div>
+				</div>
+				<div class="live roadmapposts__section">
+					<h2 class="roadmapposts__title">Live</h2>
+					<p class="roadmapposts__subtitle">Released features</p>
+					<div class="roadmapposts__content"></div>
+				</div>
+			</section>
+		</section>
 	</body>
 </html>

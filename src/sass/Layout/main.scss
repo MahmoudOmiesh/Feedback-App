@@ -1,9 +1,17 @@
-.main {
+.main,
+.roadmapposts {
 	padding: 5em 0 0 0;
 	max-width: 70rem;
 	margin-inline: auto;
+	margin-bottom: 4em;
+}
+
+.main {
 	display: grid;
 	grid-template-columns: 1fr 3fr;
 	gap: 2em;
-	margin-bottom: 4em;
+}
+
+.roadmapposts {
+	display: none;
 }

@@ -544,6 +544,73 @@ function selectListFilter(filterTerm) {
 
   document.querySelector('.selectlist__options').classList.remove('active');
 }
+},{}],"js/showRoadmap.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = showRoadmap;
+
+var _iconArrowUp = _interopRequireDefault(require("../assets/shared/icon-arrow-up.svg"));
+
+var _iconComments = _interopRequireDefault(require("../assets/shared/icon-comments.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function showRoadmap(plannedPosts, progressPosts, livePosts) {
+  var main = document.querySelector('.main');
+  var roadmap = document.querySelector('.roadmapposts');
+  var goBack = document.querySelector('.roadmapposts .btn');
+  var plannedContainer = document.querySelector('.planned .roadmapposts__content');
+  var progressContainer = document.querySelector('.inprogress .roadmapposts__content');
+  var liveContainer = document.querySelector('.live .roadmapposts__content');
+  main.style.display = 'none';
+  roadmap.style.display = 'block';
+  goBack.addEventListener('click', function () {
+    main.style.display = 'grid';
+    roadmap.style.display = 'none';
+    plannedContainer.innerHTML = '';
+    progressContainer.innerHTML = '';
+    liveContainer.innerHTML = '';
+  });
+  plannedPosts.forEach(function (post) {
+    var postDiv = document.createElement('div');
+    postDiv.classList.add('minipost');
+    postDiv.innerHTML = "\n      <p class=\"minipost__category\">".concat(post.status, "</p>\n      <div class=\"post__content\">\n        <h1 class=\"post__title\">").concat(post.title, "</h1>\n        <p class=\"post__text\">\n          ").concat(post.description, "\n        </p>\n        <div class=\"tag\">").concat(post.category, "</div>\n      </div>\n      <div class=\"minipost__footer\">\n        <div class=\"post__upvote\">\n          <img src=\"").concat(_iconArrowUp.default, "\" />\n          <span>").concat(post.upvotes, "</span>\n        </div>\n        <div class=\"post__replies\">\n          <img src=\"").concat(_iconComments.default, "\" />\n          <span>").concat(post.comments ? post.comments.length : 0, "</span>\n        </div>\n      </div>\n    ");
+    plannedContainer.appendChild(postDiv);
+  });
+  progressPosts.forEach(function (post) {
+    var postDiv = document.createElement('div');
+    postDiv.classList.add('minipost');
+    postDiv.innerHTML = "\n      <p class=\"minipost__category\">".concat(post.status, "</p>\n      <div class=\"post__content\">\n        <h1 class=\"post__title\">").concat(post.title, "</h1>\n        <p class=\"post__text\">\n          ").concat(post.description, "\n        </p>\n        <div class=\"tag\">").concat(post.category, "</div>\n      </div>\n      <div class=\"minipost__footer\">\n        <div class=\"post__upvote\">\n          <img src=\"").concat(_iconArrowUp.default, "\" />\n          <span>").concat(post.upvotes, "</span>\n        </div>\n        <div class=\"post__replies\">\n          <img src=\"").concat(_iconComments.default, "\" />\n          <span>").concat(post.comments ? post.comments.length : 0, "</span>\n        </div>\n      </div>\n    ");
+    progressContainer.appendChild(postDiv);
+  });
+  livePosts.forEach(function (post) {
+    var postDiv = document.createElement('div');
+    postDiv.classList.add('minipost');
+    postDiv.innerHTML = "\n      <p class=\"minipost__category\">".concat(post.status, "</p>\n      <div class=\"post__content\">\n        <h1 class=\"post__title\">").concat(post.title, "</h1>\n        <p class=\"post__text\">\n          ").concat(post.description, "\n        </p>\n        <div class=\"tag\">").concat(post.category, "</div>\n      </div>\n      <div class=\"minipost__footer\">\n        <div class=\"post__upvote\">\n          <img src=\"").concat(_iconArrowUp.default, "\" />\n          <span>").concat(post.upvotes, "</span>\n        </div>\n        <div class=\"post__replies\">\n          <img src=\"").concat(_iconComments.default, "\" />\n          <span>").concat(post.comments ? post.comments.length : 0, "</span>\n        </div>\n      </div>\n    ");
+    liveContainer.appendChild(postDiv);
+  });
+}
+},{"../assets/shared/icon-arrow-up.svg":"assets/shared/icon-arrow-up.svg","../assets/shared/icon-comments.svg":"assets/shared/icon-comments.svg"}],"js/showNumbers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = showNumbers;
+
+function showNumbers(suggestion, planned, progress, live) {
+  var plannedPostsNumber = document.querySelector('.roadmap__list li:first-child .roadmap__count');
+  var inprogressPostsNumber = document.querySelector('.roadmap__list li:nth-child(2) .roadmap__count');
+  var livePostsNumber = document.querySelector('.roadmap__list li:last-child .roadmap__count');
+  var postsCount = document.querySelector('.posts__header-suggestion p span');
+  postsCount.textContent = suggestion;
+  plannedPostsNumber.textContent = planned;
+  inprogressPostsNumber.textContent = progress;
+  livePostsNumber.textContent = live;
+}
 },{}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
@@ -555,12 +622,30 @@ var _filterPosts = _interopRequireDefault(require("./filterPosts"));
 
 var _selectList = _interopRequireDefault(require("./selectList"));
 
+var _showRoadmap = _interopRequireDefault(require("./showRoadmap"));
+
+var _showNumbers = _interopRequireDefault(require("./showNumbers"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var suggestionPosts = _data.default.productRequests.filter(function (post) {
   return post.status === 'suggestion';
 });
 
+var roadmapPosts = _data.default.productRequests.filter(function (post) {
+  return post.status === 'planned' || post.status === 'in-progress' || post.status === 'live';
+});
+
+var plannedPosts = roadmapPosts.filter(function (post) {
+  return post.status === 'planned';
+});
+var progressPosts = roadmapPosts.filter(function (post) {
+  return post.status === 'in-progress';
+});
+var livePosts = roadmapPosts.filter(function (post) {
+  return post.status === 'live';
+});
+(0, _showNumbers.default)(suggestionPosts.length, plannedPosts.length, progressPosts.length, livePosts.length);
 var filterTags = document.querySelectorAll('.filter .tag');
 (0, _showPosts.default)(suggestionPosts);
 filterTags.forEach(function (tag) {
@@ -579,7 +664,11 @@ options.forEach(function (option) {
     (0, _selectList.default)(e);
   });
 });
-},{"../data/data":"data/data.json","./showPosts":"js/showPosts.js","./filterPosts":"js/filterPosts.js","./selectList":"js/selectList.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var roadmapBtn = document.querySelector('.roadmap__link');
+roadmapBtn.addEventListener('click', function () {
+  return (0, _showRoadmap.default)(plannedPosts, progressPosts, livePosts);
+});
+},{"../data/data":"data/data.json","./showPosts":"js/showPosts.js","./filterPosts":"js/filterPosts.js","./selectList":"js/selectList.js","./showRoadmap":"js/showRoadmap.js","./showNumbers":"js/showNumbers.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -607,7 +696,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51883" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59081" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

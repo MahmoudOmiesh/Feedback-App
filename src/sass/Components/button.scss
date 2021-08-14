@@ -8,6 +8,7 @@
 	outline: 0;
 	font-weight: var(--fw-bold);
 	cursor: pointer;
+	text-transform: capitalize;
 
 	&.btn-primary {
 		background-color: var(--clr-accent-200);
@@ -17,6 +18,17 @@
 		padding-left: 3.25em;
 		@include pseudo(before, url(../assets/shared/icon-plus.svg)) {
 			left: 2.25em;
+		}
+	}
+
+	&.btn-transparent {
+		background: none;
+		padding: 0 0 0 1.5em;
+	}
+
+	&.btn-back {
+		@include pseudo(before, url(../assets/shared/icon-arrow-left.svg)) {
+			left: 0;
 		}
 	}
 }

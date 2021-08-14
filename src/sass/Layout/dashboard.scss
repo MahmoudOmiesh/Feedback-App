@@ -48,6 +48,16 @@
 		text-transform: capitalize;
 	}
 
+	&__link {
+		color: var(--clr-primary-400);
+		font-weight: var(--fw-medium);
+		cursor: pointer;
+		background: none;
+		border: 0;
+		outline: 0;
+		text-decoration: underline;
+	}
+
 	&__list {
 		margin: 0;
 		padding-left: 1.5em;
