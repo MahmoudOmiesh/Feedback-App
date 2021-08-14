@@ -1,0 +1,27 @@
+.none {
+	text-align: center;
+	background-color: var(--clr-neutral-100);
+	border-radius: 0.5em;
+	padding: 2em;
+
+	> * + * {
+		margin-top: 2em;
+	}
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	&__title {
+		color: var(--clr-primary-300);
+		text-transform: capitalize;
+		font-size: 1.15rem;
+	}
+
+	&__text {
+		color: var(--clr-primary-200);
+		font-size: 1rem;
+		margin: 0.65em 0 0.85em 0;
+	}
+}

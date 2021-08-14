@@ -1,6 +1,12 @@
 .selectlist {
 	position: relative;
 
+	&__content {
+		display: flex;
+		align-items: center;
+		gap: 0.5em;
+	}
+
 	&__text {
 		font-size: 0.9rem;
 		font-weight: var(--fw-medium);

@@ -9,7 +9,7 @@ export default function (posts) {
 		postDiv.innerHTML = `
     <div class="post__upvote">
       <img src="${upvoteImg}" alt="Upvote" />
-      ${post.upvotes}
+      <span data-filter="upvotes">${post.upvotes}</span>
     </div>
 
     <div class="post__content">
@@ -20,7 +20,7 @@ export default function (posts) {
 
     <div class="post__replies">
       <img src="${repliesImg}" alt="Replies" />
-      <span>
+      <span data-filter="replies">
         ${post.comments ? post.comments.length : 0}
       </span>
     </div>

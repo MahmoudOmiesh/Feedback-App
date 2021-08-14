@@ -398,7 +398,7 @@ function _default(posts) {
   posts.forEach(function (post) {
     var postDiv = document.createElement('div');
     postDiv.classList.add('post');
-    postDiv.innerHTML = "\n    <div class=\"post__upvote\">\n      <img src=\"".concat(_iconArrowUp.default, "\" alt=\"Upvote\" />\n      ").concat(post.upvotes, "\n    </div>\n\n    <div class=\"post__content\">\n      <h1 class=\"post__title\">").concat(post.title, "</h1>\n      <p class=\"post__text\">").concat(post.description, "</p>\n      <div class=\"tag\">").concat(post.category, "</div>\n    </div>\n\n    <div class=\"post__replies\">\n      <img src=\"").concat(_iconComments.default, "\" alt=\"Replies\" />\n      <span>\n        ").concat(post.comments ? post.comments.length : 0, "\n      </span>\n    </div>\n    ");
+    postDiv.innerHTML = "\n    <div class=\"post__upvote\">\n      <img src=\"".concat(_iconArrowUp.default, "\" alt=\"Upvote\" />\n      <span data-filter=\"upvotes\">").concat(post.upvotes, "</span>\n    </div>\n\n    <div class=\"post__content\">\n      <h1 class=\"post__title\">").concat(post.title, "</h1>\n      <p class=\"post__text\">").concat(post.description, "</p>\n      <div class=\"tag\">").concat(post.category, "</div>\n    </div>\n\n    <div class=\"post__replies\">\n      <img src=\"").concat(_iconComments.default, "\" alt=\"Replies\" />\n      <span data-filter=\"replies\">\n        ").concat(post.comments ? post.comments.length : 0, "\n      </span>\n    </div>\n    ");
     postsContainer.appendChild(postDiv);
   });
 }
@@ -465,7 +465,86 @@ function filterPosts(filterText, clickedTag) {
     postsContainer.appendChild(noneDiv);
   }
 }
-},{"../assets/suggestions/illustration-empty.svg":"assets/suggestions/illustration-empty.svg"}],"js/main.js":[function(require,module,exports) {
+},{"../assets/suggestions/illustration-empty.svg":"assets/suggestions/illustration-empty.svg"}],"js/selectList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = selectListLogic;
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function selectListLogic(e) {
+  var selectedText = document.querySelector('.selectlist__selected');
+  var activeOption = document.querySelector('.selectlist__options li.active');
+  activeOption.classList.remove('active');
+  e.target.classList.add('active');
+  selectedText.textContent = e.target.textContent;
+  var filterTerm = e.target.textContent.toLowerCase();
+  selectListFilter(filterTerm);
+}
+
+function selectListFilter(filterTerm) {
+  var allPosts = _toConsumableArray(document.querySelectorAll('.post'));
+
+  var postsContainer = document.querySelector('.posts__body');
+
+  if (filterTerm === 'least upvotes') {
+    allPosts.sort(function (a, b) {
+      var upvotesOne = +a.querySelector('[data-filter="upvotes"]').textContent;
+      var upvotesTwo = +b.querySelector('[data-filter="upvotes"]').textContent;
+      return upvotesOne - upvotesTwo;
+    });
+    postsContainer.innerHTML = '';
+    allPosts.forEach(function (post) {
+      return postsContainer.appendChild(post);
+    });
+  } else if (filterTerm === 'least comments') {
+    allPosts.sort(function (a, b) {
+      var repliesOne = +a.querySelector('[data-filter="replies"]').textContent;
+      var repliesTwo = +b.querySelector('[data-filter="replies"]').textContent;
+      return repliesOne - repliesTwo;
+    });
+    postsContainer.innerHTML = '';
+    allPosts.forEach(function (post) {
+      return postsContainer.appendChild(post);
+    });
+  } else if (filterTerm === 'most comments') {
+    allPosts.sort(function (a, b) {
+      var repliesOne = +a.querySelector('[data-filter="replies"]').textContent;
+      var repliesTwo = +b.querySelector('[data-filter="replies"]').textContent;
+      if (repliesOne > repliesTwo) return -1;
+    });
+    postsContainer.innerHTML = '';
+    allPosts.forEach(function (post) {
+      return postsContainer.appendChild(post);
+    });
+  } else {
+    allPosts.sort(function (a, b) {
+      var upvotesOne = +a.querySelector('[data-filter="upvotes"]').textContent;
+      var upvotesTwo = +b.querySelector('[data-filter="upvotes"]').textContent;
+      if (upvotesOne > upvotesTwo) return -1;
+    });
+    postsContainer.innerHTML = '';
+    allPosts.forEach(function (post) {
+      return postsContainer.appendChild(post);
+    });
+  }
+
+  document.querySelector('.selectlist__options').classList.remove('active');
+}
+},{}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
 var _data = _interopRequireDefault(require("../data/data"));
@@ -473,6 +552,8 @@ var _data = _interopRequireDefault(require("../data/data"));
 var _showPosts = _interopRequireDefault(require("./showPosts"));
 
 var _filterPosts = _interopRequireDefault(require("./filterPosts"));
+
+var _selectList = _interopRequireDefault(require("./selectList"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -486,13 +567,19 @@ filterTags.forEach(function (tag) {
   tag.addEventListener('click', function (e) {
     return (0, _filterPosts.default)(tag.textContent, e.target);
   });
-}); // REFACTOR
-// const selectedText = document.querySelector('.selectlist__selected');
-// const options = document.querySelector('.selectlist__options');
-// selectedText.addEventListener('click', () => {
-// 	options.classList.toggle('active');
-// });
-},{"../data/data":"data/data.json","./showPosts":"js/showPosts.js","./filterPosts":"js/filterPosts.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+});
+var selectedText = document.querySelector('.selectlist__selected');
+var optionsList = document.querySelector('.selectlist__options');
+var options = document.querySelectorAll('.selectlist__options li');
+selectedText.addEventListener('click', function () {
+  optionsList.classList.toggle('active');
+});
+options.forEach(function (option) {
+  option.addEventListener('click', function (e) {
+    (0, _selectList.default)(e);
+  });
+});
+},{"../data/data":"data/data.json","./showPosts":"js/showPosts.js","./filterPosts":"js/filterPosts.js","./selectList":"js/selectList.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -520,7 +607,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62421" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51883" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

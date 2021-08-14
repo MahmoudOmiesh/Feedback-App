@@ -121,6 +121,11 @@ body {
 .selectlist {
   position: relative;
 }
+.selectlist__content {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
 .selectlist__text {
   font-size: 0.9rem;
   font-weight: var(--fw-medium);
@@ -256,6 +261,9 @@ body {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+.none > * + * {
+  margin-top: 2em;
 }
 .none__title {
   color: var(--clr-primary-300);
