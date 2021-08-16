@@ -398,6 +398,7 @@ function _default(posts) {
   posts.forEach(function (post) {
     var postDiv = document.createElement('div');
     postDiv.classList.add('post');
+    postDiv.dataset.id = post.id;
     postDiv.innerHTML = "\n    <div class=\"post__upvote\">\n      <img src=\"".concat(_iconArrowUp.default, "\" alt=\"Upvote\" />\n      <span data-filter=\"upvotes\">").concat(post.upvotes, "</span>\n    </div>\n\n    <div class=\"post__content\">\n      <h1 class=\"post__title\">").concat(post.title, "</h1>\n      <p class=\"post__text\">").concat(post.description, "</p>\n      <div class=\"tag\">").concat(post.category, "</div>\n    </div>\n\n    <div class=\"post__replies\">\n      <img src=\"").concat(_iconComments.default, "\" alt=\"Replies\" />\n      <span data-filter=\"replies\">\n        ").concat(post.comments ? post.comments.length : 0, "\n      </span>\n    </div>\n    ");
     postsContainer.appendChild(postDiv);
   });
@@ -428,42 +429,36 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function filterPosts(filterText, clickedTag) {
-  var postsContainer = document.querySelector('.posts__body');
-  var postTags = document.querySelectorAll('.post .tag');
-
+function filterPosts(suggestionPosts, filterText, clickedTag) {
   var allPosts = _toConsumableArray(document.querySelectorAll('.post'));
 
   var activeTag = document.querySelector('.filter .tag.active');
+  var postsContainer = document.querySelector('.posts__body');
+  if (document.querySelector('.none')) document.querySelector('.none').remove();
+  var filteredPosts = suggestionPosts.filter(function (post) {
+    if (filterText === 'all') {
+      return true;
+    } else {
+      return filterText.toLowerCase() === post.category.toLowerCase();
+    }
+  });
   activeTag.classList.remove('active');
   clickedTag.classList.add('active');
   allPosts.forEach(function (post) {
     return post.style.display = 'none';
   });
-  if (document.querySelector('.none')) document.querySelector('.none').remove();
-
-  if (filterText === 'all') {
-    allPosts.forEach(function (post) {
-      return post.style.display = 'flex';
-    });
-  }
-
-  postTags.forEach(function (tag) {
-    if ("".concat(filterText.toLowerCase()) === tag.textContent.toLowerCase()) {
-      var filteredPost = tag.parentElement.parentElement;
-      filteredPost.style.display = 'flex';
-    }
+  filteredPosts.forEach(function (filteredPostJson) {
+    var filteredPostDiv = document.querySelector("[data-id=\"".concat(filteredPostJson.id, "\"]"));
+    filteredPostDiv.style.display = 'flex';
   });
+  if (filteredPosts.length === 0) postsContainer.appendChild(showNoneDiv(filterText));
+}
 
-  if (allPosts.every(function (post) {
-    return post.style.display === 'none';
-  })) {
-    var noneDiv = document.createElement('div');
-    noneDiv.classList.add('none');
-    noneDiv.innerHTML = "\n\t\t<img src=\".".concat(_illustrationEmpty.default, "\" alt=\"None Found\" />\n\t\t<h1 class='none__title'>There is no ").concat(filterText, " feedback yet.</h1>\n\t\t<p class='none__text'>\n\t\t\tGot a suggestion? Found a bug that needs to be squashed? We love hearing\n\t\t\tabout new ideas to improve our app.\n\t\t</p>\n\t\t<button class='btn btn-primary btn-add'>Add Feedback</button>\n\t\t");
-    if (document.querySelector('.none')) document.querySelector('.none').remove();
-    postsContainer.appendChild(noneDiv);
-  }
+function showNoneDiv(filterText) {
+  var noneDiv = document.createElement('div');
+  noneDiv.classList.add('none');
+  noneDiv.innerHTML = "\n\t<img src=\".".concat(_illustrationEmpty.default, "\" alt=\"None Found\" />\n\t<h1 class='none__title'>There is no ").concat(filterText, " feedback yet.</h1>\n\t<p class='none__text'>\n\t\tGot a suggestion? Found a bug that needs to be squashed? We love hearing\n\t\tabout new ideas to improve our app.\n\t</p>\n\t<button class='btn btn-primary btn-add'>Add Feedback</button>");
+  return noneDiv;
 }
 },{"../assets/suggestions/illustration-empty.svg":"assets/suggestions/illustration-empty.svg"}],"js/selectList.js":[function(require,module,exports) {
 "use strict";
@@ -473,78 +468,45 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = selectListLogic;
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+var _showPosts = _interopRequireDefault(require("./showPosts"));
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function selectListLogic(e) {
+function selectListLogic(e, suggestionPosts) {
   var selectedText = document.querySelector('.selectlist__selected');
   var activeOption = document.querySelector('.selectlist__options li.active');
+  var postsContainer = document.querySelector('.posts__body');
   activeOption.classList.remove('active');
   e.target.classList.add('active');
   selectedText.textContent = e.target.textContent;
   var filterTerm = e.target.textContent.toLowerCase();
-  selectListFilter(filterTerm);
+  var sortedPosts = filterPosts(filterTerm, suggestionPosts);
+  sortedPosts.forEach(function (sortedPostJson) {
+    var sortedPostDiv = document.querySelector("[data-id=\"".concat(sortedPostJson.id, "\"]"));
+    postsContainer.appendChild(sortedPostDiv);
+  });
 }
 
-function selectListFilter(filterTerm) {
-  var allPosts = _toConsumableArray(document.querySelectorAll('.post'));
-
-  var postsContainer = document.querySelector('.posts__body');
-
+function filterPosts(filterTerm, suggestionPosts) {
   if (filterTerm === 'least upvotes') {
-    allPosts.sort(function (a, b) {
-      var upvotesOne = +a.querySelector('[data-filter="upvotes"]').textContent;
-      var upvotesTwo = +b.querySelector('[data-filter="upvotes"]').textContent;
-      return upvotesOne - upvotesTwo;
-    });
-    postsContainer.innerHTML = '';
-    allPosts.forEach(function (post) {
-      return postsContainer.appendChild(post);
+    return suggestionPosts.sort(function (a, b) {
+      return a.upvotes - b.upvotes;
     });
   } else if (filterTerm === 'least comments') {
-    allPosts.sort(function (a, b) {
-      var repliesOne = +a.querySelector('[data-filter="replies"]').textContent;
-      var repliesTwo = +b.querySelector('[data-filter="replies"]').textContent;
-      return repliesOne - repliesTwo;
-    });
-    postsContainer.innerHTML = '';
-    allPosts.forEach(function (post) {
-      return postsContainer.appendChild(post);
+    return suggestionPosts.sort(function (a, b) {
+      return (a.comments ? a.comments.length : 0) - (b.comments ? b.comments.length : 0);
     });
   } else if (filterTerm === 'most comments') {
-    allPosts.sort(function (a, b) {
-      var repliesOne = +a.querySelector('[data-filter="replies"]').textContent;
-      var repliesTwo = +b.querySelector('[data-filter="replies"]').textContent;
-      if (repliesOne > repliesTwo) return -1;
-    });
-    postsContainer.innerHTML = '';
-    allPosts.forEach(function (post) {
-      return postsContainer.appendChild(post);
+    return suggestionPosts.sort(function (a, b) {
+      if ((a.comments ? a.comments.length : 0) > (b.comments ? b.comments.length : 0)) return -1;
     });
   } else {
-    allPosts.sort(function (a, b) {
-      var upvotesOne = +a.querySelector('[data-filter="upvotes"]').textContent;
-      var upvotesTwo = +b.querySelector('[data-filter="upvotes"]').textContent;
-      if (upvotesOne > upvotesTwo) return -1;
-    });
-    postsContainer.innerHTML = '';
-    allPosts.forEach(function (post) {
-      return postsContainer.appendChild(post);
+    return suggestionPosts.sort(function (a, b) {
+      if (a.upvotes > b.upvotes) return -1;
     });
   }
-
-  document.querySelector('.selectlist__options').classList.remove('active');
 }
-},{}],"js/showRoadmap.js":[function(require,module,exports) {
+},{"./showPosts":"js/showPosts.js"}],"js/showRoadmap.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -650,7 +612,7 @@ var filterTags = document.querySelectorAll('.filter .tag');
 (0, _showPosts.default)(suggestionPosts);
 filterTags.forEach(function (tag) {
   tag.addEventListener('click', function (e) {
-    return (0, _filterPosts.default)(tag.textContent, e.target);
+    return (0, _filterPosts.default)(suggestionPosts, tag.textContent, e.target);
   });
 });
 var selectedText = document.querySelector('.selectlist__selected');
@@ -661,7 +623,7 @@ selectedText.addEventListener('click', function () {
 });
 options.forEach(function (option) {
   option.addEventListener('click', function (e) {
-    (0, _selectList.default)(e);
+    (0, _selectList.default)(e, suggestionPosts);
   });
 });
 var roadmapBtn = document.querySelector('.roadmap__link');
@@ -696,7 +658,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59081" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60969" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

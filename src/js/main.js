@@ -35,7 +35,9 @@ const filterTags = document.querySelectorAll('.filter .tag');
 showPosts(suggestionPosts);
 
 filterTags.forEach(tag => {
-	tag.addEventListener('click', e => filterPosts(tag.textContent, e.target));
+	tag.addEventListener('click', e =>
+		filterPosts(suggestionPosts, tag.textContent, e.target)
+	);
 });
 
 const selectedText = document.querySelector('.selectlist__selected');
@@ -48,7 +50,7 @@ selectedText.addEventListener('click', () => {
 
 options.forEach(option => {
 	option.addEventListener('click', e => {
-		selectListLogic(e);
+		selectListLogic(e, suggestionPosts);
 	});
 });
 

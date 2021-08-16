@@ -1,44 +1,47 @@
 import noneImg from '../assets/suggestions/illustration-empty.svg';
 
-export default function filterPosts(filterText, clickedTag) {
-	const postsContainer = document.querySelector('.posts__body');
-	const postTags = document.querySelectorAll('.post .tag');
+export default function filterPosts(suggestionPosts, filterText, clickedTag) {
 	const allPosts = [...document.querySelectorAll('.post')];
 	const activeTag = document.querySelector('.filter .tag.active');
+	const postsContainer = document.querySelector('.posts__body');
+
+	if (document.querySelector('.none')) document.querySelector('.none').remove();
+
+	const filteredPosts = suggestionPosts.filter(post => {
+		if (filterText === 'all') {
+			return true;
+		} else {
+			return filterText.toLowerCase() === post.category.toLowerCase();
+		}
+	});
 
 	activeTag.classList.remove('active');
 	clickedTag.classList.add('active');
 
 	allPosts.forEach(post => (post.style.display = 'none'));
 
-	if (document.querySelector('.none')) document.querySelector('.none').remove();
-
-	if (filterText === 'all') {
-		allPosts.forEach(post => (post.style.display = 'flex'));
-	}
-
-	postTags.forEach(tag => {
-		if (`${filterText.toLowerCase()}` === tag.textContent.toLowerCase()) {
-			const filteredPost = tag.parentElement.parentElement;
-			filteredPost.style.display = 'flex';
-		}
+	filteredPosts.forEach(filteredPostJson => {
+		const filteredPostDiv = document.querySelector(
+			`[data-id="${filteredPostJson.id}"]`
+		);
+		filteredPostDiv.style.display = 'flex';
 	});
 
-	if (allPosts.every(post => post.style.display === 'none')) {
-		const noneDiv = document.createElement('div');
-		noneDiv.classList.add('none');
-		noneDiv.innerHTML = `
-		<img src=".${noneImg}" alt="None Found" />
-		<h1 class='none__title'>There is no ${filterText} feedback yet.</h1>
-		<p class='none__text'>
-			Got a suggestion? Found a bug that needs to be squashed? We love hearing
-			about new ideas to improve our app.
-		</p>
-		<button class='btn btn-primary btn-add'>Add Feedback</button>
-		`;
+	if (filteredPosts.length === 0)
+		postsContainer.appendChild(showNoneDiv(filterText));
+}
 
-		if (document.querySelector('.none'))
-			document.querySelector('.none').remove();
-		postsContainer.appendChild(noneDiv);
-	}
+function showNoneDiv(filterText) {
+	const noneDiv = document.createElement('div');
+	noneDiv.classList.add('none');
+	noneDiv.innerHTML = `
+	<img src=".${noneImg}" alt="None Found" />
+	<h1 class='none__title'>There is no ${filterText} feedback yet.</h1>
+	<p class='none__text'>
+		Got a suggestion? Found a bug that needs to be squashed? We love hearing
+		about new ideas to improve our app.
+	</p>
+	<button class='btn btn-primary btn-add'>Add Feedback</button>`;
+
+	return noneDiv;
 }

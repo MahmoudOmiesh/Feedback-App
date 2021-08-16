@@ -1,72 +1,43 @@
-export default function selectListLogic(e) {
+import showPosts from './showPosts';
+export default function selectListLogic(e, suggestionPosts) {
 	const selectedText = document.querySelector('.selectlist__selected');
 	const activeOption = document.querySelector('.selectlist__options li.active');
+	const postsContainer = document.querySelector('.posts__body');
 	activeOption.classList.remove('active');
 	e.target.classList.add('active');
 	selectedText.textContent = e.target.textContent;
 
 	const filterTerm = e.target.textContent.toLowerCase();
+	const sortedPosts = filterPosts(filterTerm, suggestionPosts);
 
-	selectListFilter(filterTerm);
+	sortedPosts.forEach(sortedPostJson => {
+		const sortedPostDiv = document.querySelector(
+			`[data-id="${sortedPostJson.id}"]`
+		);
+		postsContainer.appendChild(sortedPostDiv);
+	});
 }
 
-function selectListFilter(filterTerm) {
-	const allPosts = [...document.querySelectorAll('.post')];
-	const postsContainer = document.querySelector('.posts__body');
-
+function filterPosts(filterTerm, suggestionPosts) {
 	if (filterTerm === 'least upvotes') {
-		allPosts.sort((a, b) => {
-			const upvotesOne = +a.querySelector('[data-filter="upvotes"]')
-				.textContent;
-			const upvotesTwo = +b.querySelector('[data-filter="upvotes"]')
-				.textContent;
-
-			return upvotesOne - upvotesTwo;
-		});
-
-		postsContainer.innerHTML = '';
-
-		allPosts.forEach(post => postsContainer.appendChild(post));
+		return suggestionPosts.sort((a, b) => a.upvotes - b.upvotes);
 	} else if (filterTerm === 'least comments') {
-		allPosts.sort((a, b) => {
-			const repliesOne = +a.querySelector('[data-filter="replies"]')
-				.textContent;
-			const repliesTwo = +b.querySelector('[data-filter="replies"]')
-				.textContent;
-
-			return repliesOne - repliesTwo;
-		});
-
-		postsContainer.innerHTML = '';
-
-		allPosts.forEach(post => postsContainer.appendChild(post));
+		return suggestionPosts.sort(
+			(a, b) =>
+				(a.comments ? a.comments.length : 0) -
+				(b.comments ? b.comments.length : 0)
+		);
 	} else if (filterTerm === 'most comments') {
-		allPosts.sort((a, b) => {
-			const repliesOne = +a.querySelector('[data-filter="replies"]')
-				.textContent;
-			const repliesTwo = +b.querySelector('[data-filter="replies"]')
-				.textContent;
-
-			if (repliesOne > repliesTwo) return -1;
+		return suggestionPosts.sort((a, b) => {
+			if (
+				(a.comments ? a.comments.length : 0) >
+				(b.comments ? b.comments.length : 0)
+			)
+				return -1;
 		});
-
-		postsContainer.innerHTML = '';
-
-		allPosts.forEach(post => postsContainer.appendChild(post));
 	} else {
-		allPosts.sort((a, b) => {
-			const upvotesOne = +a.querySelector('[data-filter="upvotes"]')
-				.textContent;
-			const upvotesTwo = +b.querySelector('[data-filter="upvotes"]')
-				.textContent;
-
-			if (upvotesOne > upvotesTwo) return -1;
+		return suggestionPosts.sort((a, b) => {
+			if (a.upvotes > b.upvotes) return -1;
 		});
-
-		postsContainer.innerHTML = '';
-
-		allPosts.forEach(post => postsContainer.appendChild(post));
 	}
-
-	document.querySelector('.selectlist__options').classList.remove('active');
 }

@@ -6,6 +6,7 @@ export default function (posts) {
 	posts.forEach(post => {
 		const postDiv = document.createElement('div');
 		postDiv.classList.add('post');
+		postDiv.dataset.id = post.id;
 		postDiv.innerHTML = `
     <div class="post__upvote">
       <img src="${upvoteImg}" alt="Upvote" />
