@@ -385,7 +385,7 @@ module.exports = "/icon-comments.55e7345e.svg";
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = _default;
+exports.default = showPosts;
 
 var _iconArrowUp = _interopRequireDefault(require("../assets/shared/icon-arrow-up.svg"));
 
@@ -393,7 +393,7 @@ var _iconComments = _interopRequireDefault(require("../assets/shared/icon-commen
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _default(posts) {
+function showPosts(posts) {
   var postsContainer = document.querySelector('.posts__body');
   posts.forEach(function (post) {
     var postDiv = document.createElement('div');
@@ -460,19 +460,19 @@ function showNoneDiv(filterText) {
   noneDiv.innerHTML = "\n\t<img src=\".".concat(_illustrationEmpty.default, "\" alt=\"None Found\" />\n\t<h1 class='none__title'>There is no ").concat(filterText, " feedback yet.</h1>\n\t<p class='none__text'>\n\t\tGot a suggestion? Found a bug that needs to be squashed? We love hearing\n\t\tabout new ideas to improve our app.\n\t</p>\n\t<button class='btn btn-primary btn-add'>Add Feedback</button>");
   return noneDiv;
 }
-},{"../assets/suggestions/illustration-empty.svg":"assets/suggestions/illustration-empty.svg"}],"js/selectList.js":[function(require,module,exports) {
+},{"../assets/suggestions/illustration-empty.svg":"assets/suggestions/illustration-empty.svg"}],"js/headerSelectList.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = selectListLogic;
+exports.default = headerSelectListLogic;
 
 var _showPosts = _interopRequireDefault(require("./showPosts"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function selectListLogic(e, suggestionPosts) {
+function headerSelectListLogic(e, suggestionPosts) {
   var selectedText = document.querySelector('.selectlist__selected');
   var activeOption = document.querySelector('.selectlist__options li.active');
   var postsContainer = document.querySelector('.posts__body');
@@ -520,13 +520,14 @@ var _iconComments = _interopRequireDefault(require("../assets/shared/icon-commen
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var plannedContainer = document.querySelector('.planned .roadmapposts__content');
+var progressContainer = document.querySelector('.inprogress .roadmapposts__content');
+var liveContainer = document.querySelector('.live .roadmapposts__content');
+
 function showRoadmap(plannedPosts, progressPosts, livePosts) {
   var main = document.querySelector('.main');
   var roadmap = document.querySelector('.roadmapposts');
   var goBack = document.querySelector('.roadmapposts .btn');
-  var plannedContainer = document.querySelector('.planned .roadmapposts__content');
-  var progressContainer = document.querySelector('.inprogress .roadmapposts__content');
-  var liveContainer = document.querySelector('.live .roadmapposts__content');
   main.style.display = 'none';
   roadmap.style.display = 'block';
   goBack.addEventListener('click', function () {
@@ -536,6 +537,10 @@ function showRoadmap(plannedPosts, progressPosts, livePosts) {
     progressContainer.innerHTML = '';
     liveContainer.innerHTML = '';
   });
+  showRoadmapPosts(plannedPosts, progressPosts, livePosts);
+}
+
+function showRoadmapPosts(plannedPosts, progressPosts, livePosts) {
   plannedPosts.forEach(function (post) {
     var postDiv = document.createElement('div');
     postDiv.classList.add('minipost');
@@ -573,7 +578,62 @@ function showNumbers(suggestion, planned, progress, live) {
   inprogressPostsNumber.textContent = progress;
   livePostsNumber.textContent = live;
 }
-},{}],"js/main.js":[function(require,module,exports) {
+},{}],"js/addPostSelectlist.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = addPostSelectlistLogic;
+var addPostSelectlistText = document.querySelector('.addpost .selectlist__selected');
+
+function addPostSelectlistLogic(e) {
+  var activeOption = document.querySelector('.addpost .selectlist__options li.active');
+  if (activeOption) activeOption.classList.remove('active');
+  e.target.classList.add('active');
+  addPostSelectlistText.textContent = e.target.textContent;
+}
+},{}],"js/addPost.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = addPost;
+exports.removeAddPostOverlay = removeAddPostOverlay;
+
+var _showPosts = _interopRequireDefault(require("./showPosts"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function addPost(e, suggestionPosts) {
+  e.preventDefault();
+  var postTitle = document.querySelector('[data-input="title"]').value;
+  var postCategory = document.querySelector('[data-input="category"]').textContent;
+  var postDescription = document.querySelector('[data-input="description"]').value;
+  var postsContainer = document.querySelector('.posts__body');
+  var randomID = Math.floor(Math.random() * (1000 - 7 + 1)) + 7;
+  var newPost = {
+    id: randomID,
+    title: postTitle,
+    category: postCategory,
+    upvotes: 0,
+    status: 'suggestion',
+    description: postDescription,
+    comments: []
+  };
+  suggestionPosts.push(newPost);
+  postsContainer.innerHTML = '';
+  (0, _showPosts.default)(suggestionPosts);
+  removeAddPostOverlay(null);
+}
+
+function removeAddPostOverlay(e) {
+  if (e) e.preventDefault();
+  var addPostOverlay = document.querySelector('.addpost');
+  addPostOverlay.classList.remove('active');
+}
+},{"./showPosts":"js/showPosts.js"}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
 var _data = _interopRequireDefault(require("../data/data"));
@@ -582,11 +642,19 @@ var _showPosts = _interopRequireDefault(require("./showPosts"));
 
 var _filterPosts = _interopRequireDefault(require("./filterPosts"));
 
-var _selectList = _interopRequireDefault(require("./selectList"));
+var _headerSelectList = _interopRequireDefault(require("./headerSelectList"));
 
 var _showRoadmap = _interopRequireDefault(require("./showRoadmap"));
 
 var _showNumbers = _interopRequireDefault(require("./showNumbers"));
+
+var _addPostSelectlist = _interopRequireDefault(require("./addPostSelectlist"));
+
+var _addPost = _interopRequireWildcard(require("./addPost"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -607,30 +675,64 @@ var progressPosts = roadmapPosts.filter(function (post) {
 var livePosts = roadmapPosts.filter(function (post) {
   return post.status === 'live';
 });
-(0, _showNumbers.default)(suggestionPosts.length, plannedPosts.length, progressPosts.length, livePosts.length);
 var filterTags = document.querySelectorAll('.filter .tag');
-(0, _showPosts.default)(suggestionPosts);
+var headerSelectedText = document.querySelector('.posts .selectlist__selected');
+var headerOptionsList = document.querySelector('.posts .selectlist__options');
+var headerOptions = document.querySelectorAll('.posts .selectlist__options li');
+var roadmapBtn = document.querySelector('.roadmap__link');
+var addPostOverlayBtn = document.querySelector('.posts__header .btn');
+var addPostOverlay = document.querySelector('.addpost');
+var addPostSelectlist = document.querySelector('.addpost .selectlist__content');
+var addPostOptionsList = document.querySelector('.addpost .selectlist__options');
+var addPostOptions = document.querySelectorAll('.addpost .selectlist__options li');
+var addPostBtn = document.querySelector('.addpost .btn-primary');
+var removeAddPostOverlayBtn = document.querySelector('.addpost .btn-secondary');
+var goBackOverlayBtn = document.querySelector('.addpost .btn-back'); //show posts
+
+(0, _showPosts.default)(suggestionPosts); //show post numbers
+
+(0, _showNumbers.default)(suggestionPosts.length, plannedPosts.length, progressPosts.length, livePosts.length); //Listeners for filter tags
+
 filterTags.forEach(function (tag) {
   tag.addEventListener('click', function (e) {
     return (0, _filterPosts.default)(suggestionPosts, tag.textContent, e.target);
   });
-});
-var selectedText = document.querySelector('.selectlist__selected');
-var optionsList = document.querySelector('.selectlist__options');
-var options = document.querySelectorAll('.selectlist__options li');
-selectedText.addEventListener('click', function () {
-  optionsList.classList.toggle('active');
-});
-options.forEach(function (option) {
+}); // listener for header select list
+
+headerSelectedText.addEventListener('click', function () {
+  headerOptionsList.classList.toggle('active');
+}); // listener for header options
+
+headerOptions.forEach(function (option) {
   option.addEventListener('click', function (e) {
-    (0, _selectList.default)(e, suggestionPosts);
+    (0, _headerSelectList.default)(e, suggestionPosts);
   });
-});
-var roadmapBtn = document.querySelector('.roadmap__link');
+}); // shows roadmap posts
+
 roadmapBtn.addEventListener('click', function () {
   return (0, _showRoadmap.default)(plannedPosts, progressPosts, livePosts);
+}); // shows add post overlay
+
+addPostOverlayBtn.addEventListener('click', function () {
+  addPostOverlay.classList.add('active');
+}); // listener for add post selectlist
+
+addPostSelectlist.addEventListener('click', function () {
+  addPostOptionsList.classList.toggle('active');
+}); // listener for add post select list options
+
+addPostOptions.forEach(function (option) {
+  option.addEventListener('click', function (e) {
+    (0, _addPostSelectlist.default)(e);
+  });
+}); // add post listener for add button
+
+addPostBtn.addEventListener('click', function (e) {
+  return (0, _addPost.default)(e, suggestionPosts);
 });
-},{"../data/data":"data/data.json","./showPosts":"js/showPosts.js","./filterPosts":"js/filterPosts.js","./selectList":"js/selectList.js","./showRoadmap":"js/showRoadmap.js","./showNumbers":"js/showNumbers.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+removeAddPostOverlayBtn.addEventListener('click', _addPost.removeAddPostOverlay);
+goBackOverlayBtn.addEventListener('click', _addPost.removeAddPostOverlay);
+},{"../data/data":"data/data.json","./showPosts":"js/showPosts.js","./filterPosts":"js/filterPosts.js","./headerSelectList":"js/headerSelectList.js","./showRoadmap":"js/showRoadmap.js","./showNumbers":"js/showNumbers.js","./addPostSelectlist":"js/addPostSelectlist.js","./addPost":"js/addPost.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -658,7 +760,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60969" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63516" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

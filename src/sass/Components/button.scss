@@ -14,6 +14,10 @@
 		background-color: var(--clr-accent-200);
 	}
 
+	&.btn-secondary {
+		background-color: #656ea3;
+	}
+
 	&.btn-add {
 		padding-left: 3.25em;
 		@include pseudo(before, url(../assets/shared/icon-plus.svg)) {

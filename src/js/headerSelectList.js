@@ -1,5 +1,5 @@
 import showPosts from './showPosts';
-export default function selectListLogic(e, suggestionPosts) {
+export default function headerSelectListLogic(e, suggestionPosts) {
 	const selectedText = document.querySelector('.selectlist__selected');
 	const activeOption = document.querySelector('.selectlist__options li.active');
 	const postsContainer = document.querySelector('.posts__body');

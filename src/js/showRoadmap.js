@@ -1,17 +1,17 @@
 import upvoteImg from '../assets/shared/icon-arrow-up.svg';
 import repliesImg from '../assets/shared/icon-comments.svg';
+const plannedContainer = document.querySelector(
+	'.planned .roadmapposts__content'
+);
+const progressContainer = document.querySelector(
+	'.inprogress .roadmapposts__content'
+);
+const liveContainer = document.querySelector('.live .roadmapposts__content');
 
 export default function showRoadmap(plannedPosts, progressPosts, livePosts) {
 	const main = document.querySelector('.main');
 	const roadmap = document.querySelector('.roadmapposts');
 	const goBack = document.querySelector('.roadmapposts .btn');
-	const plannedContainer = document.querySelector(
-		'.planned .roadmapposts__content'
-	);
-	const progressContainer = document.querySelector(
-		'.inprogress .roadmapposts__content'
-	);
-	const liveContainer = document.querySelector('.live .roadmapposts__content');
 
 	main.style.display = 'none';
 	roadmap.style.display = 'block';
@@ -24,6 +24,10 @@ export default function showRoadmap(plannedPosts, progressPosts, livePosts) {
 		liveContainer.innerHTML = '';
 	});
 
+	showRoadmapPosts(plannedPosts, progressPosts, livePosts);
+}
+
+function showRoadmapPosts(plannedPosts, progressPosts, livePosts) {
 	plannedPosts.forEach(post => {
 		const postDiv = document.createElement('div');
 		postDiv.classList.add('minipost');

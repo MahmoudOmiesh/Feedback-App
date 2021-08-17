@@ -1,7 +1,7 @@
 import upvoteImg from '../assets/shared/icon-arrow-up.svg';
 import repliesImg from '../assets/shared/icon-comments.svg';
 
-export default function (posts) {
+export default function showPosts(posts) {
 	const postsContainer = document.querySelector('.posts__body');
 	posts.forEach(post => {
 		const postDiv = document.createElement('div');
