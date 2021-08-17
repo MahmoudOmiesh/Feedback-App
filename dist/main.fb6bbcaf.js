@@ -633,7 +633,40 @@ function removeAddPostOverlay(e) {
   var addPostOverlay = document.querySelector('.addpost');
   addPostOverlay.classList.remove('active');
 }
-},{"./showPosts":"js/showPosts.js"}],"js/main.js":[function(require,module,exports) {
+},{"./showPosts":"js/showPosts.js"}],"js/increaseUpvoteCount.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = increaseUpvoteCount;
+
+function increaseUpvoteCount(e, suggestionPosts) {
+  if (!e.target.classList.contains('active')) {
+    updatePostData(suggestionPosts, e, 'add');
+  } else {
+    updatePostData(suggestionPosts, e, 'subtract');
+  }
+}
+
+function updatePostData(suggestionPosts, e, operation) {
+  var postUpvotesText = e.target.querySelector('span');
+  var postIdx = +e.target.parentElement.dataset.id;
+  suggestionPosts.forEach(function (post) {
+    if (post.id === postIdx) {
+      if (operation === 'add') {
+        post.upvotes++;
+        postUpvotesText.textContent = post.upvotes;
+        e.target.classList.add('active');
+      } else {
+        post.upvotes--;
+        postUpvotesText.textContent = post.upvotes;
+        e.target.classList.remove('active');
+      }
+    }
+  });
+}
+},{}],"js/main.js":[function(require,module,exports) {
 "use strict";
 
 var _data = _interopRequireDefault(require("../data/data"));
@@ -651,6 +684,8 @@ var _showNumbers = _interopRequireDefault(require("./showNumbers"));
 var _addPostSelectlist = _interopRequireDefault(require("./addPostSelectlist"));
 
 var _addPost = _interopRequireWildcard(require("./addPost"));
+
+var _increaseUpvoteCount = _interopRequireDefault(require("./increaseUpvoteCount"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -674,7 +709,9 @@ var progressPosts = roadmapPosts.filter(function (post) {
 });
 var livePosts = roadmapPosts.filter(function (post) {
   return post.status === 'live';
-});
+}); //show posts
+
+(0, _showPosts.default)(suggestionPosts);
 var filterTags = document.querySelectorAll('.filter .tag');
 var headerSelectedText = document.querySelector('.posts .selectlist__selected');
 var headerOptionsList = document.querySelector('.posts .selectlist__options');
@@ -687,9 +724,8 @@ var addPostOptionsList = document.querySelector('.addpost .selectlist__options')
 var addPostOptions = document.querySelectorAll('.addpost .selectlist__options li');
 var addPostBtn = document.querySelector('.addpost .btn-primary');
 var removeAddPostOverlayBtn = document.querySelector('.addpost .btn-secondary');
-var goBackOverlayBtn = document.querySelector('.addpost .btn-back'); //show posts
-
-(0, _showPosts.default)(suggestionPosts); //show post numbers
+var goBackOverlayBtn = document.querySelector('.addpost .btn-back');
+var postsContainer = document.querySelector('.posts__body'); //show post numbers
 
 (0, _showNumbers.default)(suggestionPosts.length, plannedPosts.length, progressPosts.length, livePosts.length); //Listeners for filter tags
 
@@ -729,10 +765,15 @@ addPostOptions.forEach(function (option) {
 
 addPostBtn.addEventListener('click', function (e) {
   return (0, _addPost.default)(e, suggestionPosts);
-});
+}); // listeners for back and cancel buttons
+
 removeAddPostOverlayBtn.addEventListener('click', _addPost.removeAddPostOverlay);
-goBackOverlayBtn.addEventListener('click', _addPost.removeAddPostOverlay);
-},{"../data/data":"data/data.json","./showPosts":"js/showPosts.js","./filterPosts":"js/filterPosts.js","./headerSelectList":"js/headerSelectList.js","./showRoadmap":"js/showRoadmap.js","./showNumbers":"js/showNumbers.js","./addPostSelectlist":"js/addPostSelectlist.js","./addPost":"js/addPost.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+goBackOverlayBtn.addEventListener('click', _addPost.removeAddPostOverlay); // listener for upvotes
+
+postsContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('post__upvote')) (0, _increaseUpvoteCount.default)(e, suggestionPosts);
+});
+},{"../data/data":"data/data.json","./showPosts":"js/showPosts.js","./filterPosts":"js/filterPosts.js","./headerSelectList":"js/headerSelectList.js","./showRoadmap":"js/showRoadmap.js","./showNumbers":"js/showNumbers.js","./addPostSelectlist":"js/addPostSelectlist.js","./addPost":"js/addPost.js","./increaseUpvoteCount":"js/increaseUpvoteCount.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -760,7 +801,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63516" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52343" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

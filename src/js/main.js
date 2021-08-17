@@ -6,6 +6,7 @@ import showRoadmap from './showRoadmap';
 import showNumbers from './showNumbers';
 import addPostSelectlistLogic from './addPostSelectlist';
 import addPost, { removeAddPostOverlay } from './addPost';
+import increaseUpvoteCount from './increaseUpvoteCount';
 
 const suggestionPosts = data.productRequests.filter(post => {
 	return post.status === 'suggestion';
@@ -24,6 +25,11 @@ const progressPosts = roadmapPosts.filter(
 	post => post.status === 'in-progress'
 );
 const livePosts = roadmapPosts.filter(post => post.status === 'live');
+
+//show posts
+
+showPosts(suggestionPosts);
+
 const filterTags = document.querySelectorAll('.filter .tag');
 const headerSelectedText = document.querySelector(
 	'.posts .selectlist__selected'
@@ -50,10 +56,7 @@ const removeAddPostOverlayBtn = document.querySelector(
 	'.addpost .btn-secondary'
 );
 const goBackOverlayBtn = document.querySelector('.addpost .btn-back');
-
-//show posts
-
-showPosts(suggestionPosts);
+const postsContainer = document.querySelector('.posts__body');
 
 //show post numbers
 
@@ -116,5 +119,14 @@ addPostOptions.forEach(option => {
 
 addPostBtn.addEventListener('click', e => addPost(e, suggestionPosts));
 
+// listeners for back and cancel buttons
+
 removeAddPostOverlayBtn.addEventListener('click', removeAddPostOverlay);
 goBackOverlayBtn.addEventListener('click', removeAddPostOverlay);
+
+// listener for upvotes
+
+postsContainer.addEventListener('click', e => {
+	if (e.target.classList.contains('post__upvote'))
+		increaseUpvoteCount(e, suggestionPosts);
+});

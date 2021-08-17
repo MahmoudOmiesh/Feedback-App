@@ -29,6 +29,16 @@
 		&:hover {
 			background-color: var(--clr-neutral-400);
 		}
+
+		&.active {
+			background-color: var(--clr-primary-400);
+			color: var(--clr-neutral-100);
+		}
+
+		img,
+		span {
+			pointer-events: none;
+		}
 	}
 
 	&__title {

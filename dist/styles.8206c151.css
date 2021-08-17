@@ -249,6 +249,14 @@ body {
 .post__upvote:hover {
   background-color: var(--clr-neutral-400);
 }
+.post__upvote.active {
+  background-color: var(--clr-primary-400);
+  color: var(--clr-neutral-100);
+}
+.post__upvote img,
+.post__upvote span {
+  pointer-events: none;
+}
 .post__title {
   color: var(--clr-primary-300);
   text-transform: capitalize;
