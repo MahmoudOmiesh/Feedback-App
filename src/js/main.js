@@ -4,11 +4,10 @@ import filterPosts from './filterPosts';
 import headerSelectListLogic from './headerSelectList';
 import showRoadmap from './showRoadmap';
 import showNumbers from './showNumbers';
-import addPostSelectlistLogic from './addPostSelectlist';
-import addPost, { removeAddPostOverlay } from './addPost';
 import increaseUpvoteCount from './increaseUpvoteCount';
+import showAddPostOverlay from './showAddPostOverlay';
 
-const suggestionPosts = data.productRequests.filter(post => {
+export const suggestionPosts = data.productRequests.filter(post => {
 	return post.status === 'suggestion';
 });
 
@@ -41,21 +40,6 @@ const headerOptions = document.querySelectorAll(
 const roadmapBtn = document.querySelector('.roadmap__link');
 
 const addPostOverlayBtn = document.querySelector('.posts__header .btn');
-const addPostOverlay = document.querySelector('.addpost');
-const addPostSelectlist = document.querySelector(
-	'.addpost .selectlist__content'
-);
-const addPostOptionsList = document.querySelector(
-	'.addpost .selectlist__options'
-);
-const addPostOptions = document.querySelectorAll(
-	'.addpost .selectlist__options li'
-);
-const addPostBtn = document.querySelector('.addpost .btn-primary');
-const removeAddPostOverlayBtn = document.querySelector(
-	'.addpost .btn-secondary'
-);
-const goBackOverlayBtn = document.querySelector('.addpost .btn-back');
 const postsContainer = document.querySelector('.posts__body');
 
 //show post numbers
@@ -97,32 +81,7 @@ roadmapBtn.addEventListener('click', () =>
 
 // shows add post overlay
 
-addPostOverlayBtn.addEventListener('click', () => {
-	addPostOverlay.classList.add('active');
-});
-
-// listener for add post selectlist
-
-addPostSelectlist.addEventListener('click', () => {
-	addPostOptionsList.classList.toggle('active');
-});
-
-// listener for add post select list options
-
-addPostOptions.forEach(option => {
-	option.addEventListener('click', e => {
-		addPostSelectlistLogic(e);
-	});
-});
-
-// add post listener for add button
-
-addPostBtn.addEventListener('click', e => addPost(e, suggestionPosts));
-
-// listeners for back and cancel buttons
-
-removeAddPostOverlayBtn.addEventListener('click', removeAddPostOverlay);
-goBackOverlayBtn.addEventListener('click', removeAddPostOverlay);
+addPostOverlayBtn.addEventListener('click', showAddPostOverlay);
 
 // listener for upvotes
 

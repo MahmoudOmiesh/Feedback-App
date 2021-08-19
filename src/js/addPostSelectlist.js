@@ -1,7 +1,7 @@
-const addPostSelectlistText = document.querySelector(
-	'.addpost .selectlist__selected'
-);
 export default function addPostSelectlistLogic(e) {
+	const addPostSelectlistText = document.querySelector(
+		'.addpost .selectlist__selected'
+	);
 	const activeOption = document.querySelector(
 		'.addpost .selectlist__options li.active'
 	);

@@ -35,4 +35,5 @@ export function removeAddPostOverlay(e) {
 	if (e) e.preventDefault();
 	const addPostOverlay = document.querySelector('.addpost');
 	addPostOverlay.classList.remove('active');
+	addPostOverlay.innerHTML = '';
 }
