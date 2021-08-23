@@ -1,5 +1,6 @@
 import upvoteImg from '../assets/shared/icon-arrow-up.svg';
 import repliesImg from '../assets/shared/icon-comments.svg';
+import showPostDetails from './showPostDetails';
 
 export default function showPosts(posts) {
 	const postsContainer = document.querySelector('.posts__body');
@@ -28,5 +29,6 @@ export default function showPosts(posts) {
     `;
 
 		postsContainer.appendChild(postDiv);
+		postDiv.addEventListener('click', showPostDetails);
 	});
 }

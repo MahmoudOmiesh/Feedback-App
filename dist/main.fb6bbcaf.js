@@ -379,7 +379,139 @@ module.exports = {
 module.exports = "/icon-arrow-up.15c07bf3.svg";
 },{}],"assets/shared/icon-comments.svg":[function(require,module,exports) {
 module.exports = "/icon-comments.55e7345e.svg";
-},{}],"js/showPosts.js":[function(require,module,exports) {
+},{}],"assets/user-images/image-george.jpg":[function(require,module,exports) {
+module.exports = "/image-george.c3e61098.jpg";
+},{}],"assets/user-images/image-anne.jpg":[function(require,module,exports) {
+module.exports = "/image-anne.fe6ad5ea.jpg";
+},{}],"assets/user-images/image-elijah.jpg":[function(require,module,exports) {
+module.exports = "/image-elijah.5ca0ca91.jpg";
+},{}],"assets/user-images/image-jackson.jpg":[function(require,module,exports) {
+module.exports = "/image-jackson.89922738.jpg";
+},{}],"assets/user-images/image-james.jpg":[function(require,module,exports) {
+module.exports = "/image-james.9cbf6bb1.jpg";
+},{}],"assets/user-images/image-judah.jpg":[function(require,module,exports) {
+module.exports = "/image-judah.e2109ace.jpg";
+},{}],"assets/user-images/image-ryan.jpg":[function(require,module,exports) {
+module.exports = "/image-ryan.c0c4ef0f.jpg";
+},{}],"assets/user-images/image-javier.jpg":[function(require,module,exports) {
+module.exports = "/image-javier.8c7b9963.jpg";
+},{}],"assets/user-images/image-roxanne.jpg":[function(require,module,exports) {
+module.exports = "/image-roxanne.95295f4e.jpg";
+},{}],"assets/user-images/image-suzanne.jpg":[function(require,module,exports) {
+module.exports = "/image-suzanne.281c9b2d.jpg";
+},{}],"assets/user-images/image-thomas.jpg":[function(require,module,exports) {
+module.exports = "/image-thomas.2da7ef2f.jpg";
+},{}],"assets/user-images/image-victoria.jpg":[function(require,module,exports) {
+module.exports = "/image-victoria.0cb39844.jpg";
+},{}],"assets/user-images/image-zena.jpg":[function(require,module,exports) {
+module.exports = "/image-zena.8d6fb0c4.jpg";
+},{}],"assets/user-images/*.jpg":[function(require,module,exports) {
+module.exports = {
+  "image-george": require("./image-george.jpg"),
+  "image-anne": require("./image-anne.jpg"),
+  "image-elijah": require("./image-elijah.jpg"),
+  "image-jackson": require("./image-jackson.jpg"),
+  "image-james": require("./image-james.jpg"),
+  "image-judah": require("./image-judah.jpg"),
+  "image-ryan": require("./image-ryan.jpg"),
+  "image-javier": require("./image-javier.jpg"),
+  "image-roxanne": require("./image-roxanne.jpg"),
+  "image-suzanne": require("./image-suzanne.jpg"),
+  "image-thomas": require("./image-thomas.jpg"),
+  "image-victoria": require("./image-victoria.jpg"),
+  "image-zena": require("./image-zena.jpg")
+};
+},{"./image-george.jpg":"assets/user-images/image-george.jpg","./image-anne.jpg":"assets/user-images/image-anne.jpg","./image-elijah.jpg":"assets/user-images/image-elijah.jpg","./image-jackson.jpg":"assets/user-images/image-jackson.jpg","./image-james.jpg":"assets/user-images/image-james.jpg","./image-judah.jpg":"assets/user-images/image-judah.jpg","./image-ryan.jpg":"assets/user-images/image-ryan.jpg","./image-javier.jpg":"assets/user-images/image-javier.jpg","./image-roxanne.jpg":"assets/user-images/image-roxanne.jpg","./image-suzanne.jpg":"assets/user-images/image-suzanne.jpg","./image-thomas.jpg":"assets/user-images/image-thomas.jpg","./image-victoria.jpg":"assets/user-images/image-victoria.jpg","./image-zena.jpg":"assets/user-images/image-zena.jpg"}],"js/showPostDetails.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = showPostDetails;
+
+var _main = require("./main");
+
+var _ = _interopRequireDefault(require("../assets/user-images/*.jpg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function showPostDetails(e) {
+  var clickedPostDiv = e.currentTarget.cloneNode(true);
+
+  var clickedPostData = _main.suggestionPosts.filter(function (post) {
+    return post.id === +clickedPostDiv.dataset.id;
+  })[0];
+
+  var postComments = '';
+
+  if (clickedPostData.comments) {
+    clickedPostData.comments.forEach(function (comment) {
+      var imgSrc = "image-".concat(comment.user.name.split(' ')[0].toLowerCase());
+      postComments += "\n\t\t\t<div class='comment' data-comment-id=\"".concat(comment.id, "\">\n\t\t\t\t<img\n\t\t\t\t\tsrc='").concat(_.default[imgSrc], "'\n\t\t\t\t\talt='").concat(comment.user.name, "'\n\t\t\t\t\tclass='comment__user-pfp'\n\t\t\t\t/>\n\t\t\t\t<div class='comment__content'>\n\t\t\t\t\t<h4 class='comment__user-name'>@").concat(comment.user.name, "</h4>\n\t\t\t\t\t<p class='comment__user-at'>").concat(comment.user.username, "</p>\n\t\t\t\t\t<p class='comment__text'>\n\t\t\t\t\t").concat(comment.content, "\n\t\t\t\t\t</p>\n\t\t\t\t\t<div class=\"comment__reply\">\n\t\t\t\t\t\t<textarea placeholder=\"Replying to @").concat(comment.user.username, "\" class=\"comment__reply-text\"></textarea>\n\t\t\t\t\t\t<button class=\"comment__reply-send btn btn-secondary\">send</button>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<button class='btn btn-text'>Reply</button>\n\t\t\t</div>\n    ");
+
+      if (comment.replies) {
+        comment.replies.forEach(function (reply) {
+          var imgSrc = "image-".concat(reply.user.name.split(' ')[0].toLowerCase());
+          postComments += "\n\t\t\t\t\t<div class='comment reply'>\n\t\t\t\t\t<img\n\t\t\t\t\t\tsrc='".concat(_.default[imgSrc], "'\n\t\t\t\t\t\talt='").concat(reply.user.name, "'\n\t\t\t\t\t\tclass='comment__user-pfp'\n\t\t\t\t\t/>\n\t\t\t\t\t<div class='comment__content'>\n\t\t\t\t\t\t<h4 class='comment__user-name'>").concat(reply.user.name, "</h4>\n\t\t\t\t\t\t<p class='comment__user-at'>@").concat(reply.user.username, "</p>\n\t\t\t\t\t\t<p class='comment__text'>\n\t\t\t\t\t\t<span class=\"attext\">@").concat(reply.replyingTo, " </span>\n\t\t\t\t\t\t").concat(reply.content, "\n\t\t\t\t\t\t</p>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t");
+        });
+      }
+    });
+  }
+
+  var postDetails = document.querySelector('.details');
+  postDetails.classList.add('active');
+  postDetails.innerHTML = "\n\t  <div class=\"details__content\">\n\t  <div class=\"details__header\">\n\t    <button class=\"btn btn-transparent btn-back\">go back</button>\n\t    <button class=\"btn btn-secondary\">edit feedback</button>\n\t  </div>\n\t  <div class=\"details__comments\">\n\t    <h3 class=\"details__comments-count\">".concat(clickedPostData.comments ? clickedPostData.comments.length : 0, " Comments</h3>\n      ").concat(postComments, "\n\t  </div>\n\t  <div class=\"details__add\">\n\t    <h4 class=\"details__add-title\">Add Comment</h4>\n\t    <textarea\n\t      placeholder=\"Place your comment here\"\n\t      class=\"details__add-text\"\n\t    ></textarea>\n\t    <div class=\"details__add-footer\">\n\t      <p class=\"details__add-letters\">0 / 250</p>\n\t      <button class=\"btn btn-primary\">post comment</button>\n\t    </div>\n\t  </div>\n\t</div>\n\t");
+  postDetails.querySelector('.details__header').after(clickedPostDiv);
+  addDetailsEvents();
+}
+
+function addDetailsEvents() {
+  var postDetails = document.querySelector('.details');
+  var replyBtns = postDetails.querySelectorAll('.comment .btn-text');
+  var sendBtns = postDetails.querySelectorAll('.comment__reply-send');
+  replyBtns.forEach(function (btn) {
+    return btn.addEventListener('click', function (e) {
+      e.currentTarget.previousElementSibling.querySelector('.comment__reply').classList.toggle('active');
+    });
+  });
+  sendBtns.forEach(function (btn) {
+    return btn.addEventListener('click', function (e) {
+      return addReply(e);
+    });
+  });
+}
+
+function addReply(e) {
+  var commentDiv = e.currentTarget.parentElement.parentElement.parentElement;
+  var commentDataIdx = +commentDiv.dataset.commentId;
+  var replyText = e.currentTarget.previousElementSibling.value;
+  var newReplyObj = {
+    content: replyText,
+    user: _main.currentUser
+  };
+
+  _main.suggestionPosts.filter(function (_ref) {
+    var comments = _ref.comments;
+    if (comments) comments.filter(function (comment) {
+      if (comment.id === commentDataIdx) {
+        if (!comment.replies) comment.replies = [];
+        newReplyObj.replyingTo = comment.user.username;
+        comment.replies.push(newReplyObj);
+      }
+    });
+  });
+
+  var imgSrc = "image-".concat(newReplyObj.user.name.split(' ')[0].toLowerCase());
+  var newReplyDiv = document.createElement('div');
+  newReplyDiv.className = 'comment reply';
+  newReplyDiv.innerHTML = "\n\t\t<img\n\t\tsrc='".concat(_.default[imgSrc], "'\n\t\talt='").concat(newReplyObj.user.name, "'\n\t\tclass='comment__user-pfp'\n\t/>\n\t<div class='comment__content'>\n\t\t<h4 class='comment__user-name'>").concat(newReplyObj.user.name, "</h4>\n\t\t<p class='comment__user-at'>@").concat(newReplyObj.user.username, "</p>\n\t\t<p class='comment__text'>\n\t\t<span class=\"attext\">@").concat(newReplyObj.replyingTo, "</span>\n\t\t").concat(newReplyObj.content, "\n\t\t</p>\n\t</div>\n\t");
+  commentDiv.after(newReplyDiv);
+  e.currentTarget.parentElement.classList.remove('active');
+  e.currentTarget.previousElementSibling.value = '';
+} // TODO : Add comments
+// TODO : Comment Images DONE .
+// TODO : Replies DONE .
+},{"./main":"js/main.js","../assets/user-images/*.jpg":"assets/user-images/*.jpg"}],"js/showPosts.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -391,6 +523,8 @@ var _iconArrowUp = _interopRequireDefault(require("../assets/shared/icon-arrow-u
 
 var _iconComments = _interopRequireDefault(require("../assets/shared/icon-comments.svg"));
 
+var _showPostDetails = _interopRequireDefault(require("./showPostDetails"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function showPosts(posts) {
@@ -401,9 +535,10 @@ function showPosts(posts) {
     postDiv.dataset.id = post.id;
     postDiv.innerHTML = "\n    <div class=\"post__upvote\">\n      <img src=\"".concat(_iconArrowUp.default, "\" alt=\"Upvote\" />\n      <span data-filter=\"upvotes\">").concat(post.upvotes, "</span>\n    </div>\n\n    <div class=\"post__content\">\n      <h1 class=\"post__title\">").concat(post.title, "</h1>\n      <p class=\"post__text\">").concat(post.description, "</p>\n      <div class=\"tag\">").concat(post.category, "</div>\n    </div>\n\n    <div class=\"post__replies\">\n      <img src=\"").concat(_iconComments.default, "\" alt=\"Replies\" />\n      <span data-filter=\"replies\">\n        ").concat(post.comments ? post.comments.length : 0, "\n      </span>\n    </div>\n    ");
     postsContainer.appendChild(postDiv);
+    postDiv.addEventListener('click', _showPostDetails.default);
   });
 }
-},{"../assets/shared/icon-arrow-up.svg":"assets/shared/icon-arrow-up.svg","../assets/shared/icon-comments.svg":"assets/shared/icon-comments.svg"}],"assets/suggestions/illustration-empty.svg":[function(require,module,exports) {
+},{"../assets/shared/icon-arrow-up.svg":"assets/shared/icon-arrow-up.svg","../assets/shared/icon-comments.svg":"assets/shared/icon-comments.svg","./showPostDetails":"js/showPostDetails.js"}],"assets/suggestions/illustration-empty.svg":[function(require,module,exports) {
 module.exports = "/illustration-empty.daaa623c.svg";
 },{}],"js/filterPosts.js":[function(require,module,exports) {
 "use strict";
@@ -730,7 +865,7 @@ function showAddPostOverlay() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.suggestionPosts = void 0;
+exports.currentUser = exports.suggestionPosts = void 0;
 
 var _data = _interopRequireDefault(require("../data/data"));
 
@@ -755,6 +890,8 @@ var suggestionPosts = _data.default.productRequests.filter(function (post) {
 });
 
 exports.suggestionPosts = suggestionPosts;
+var currentUser = _data.default.currentUser;
+exports.currentUser = currentUser;
 
 var roadmapPosts = _data.default.productRequests.filter(function (post) {
   return post.status === 'planned' || post.status === 'in-progress' || post.status === 'live';
@@ -768,16 +905,16 @@ var progressPosts = roadmapPosts.filter(function (post) {
 });
 var livePosts = roadmapPosts.filter(function (post) {
   return post.status === 'live';
-}); //show posts
-
-(0, _showPosts.default)(suggestionPosts);
+});
 var filterTags = document.querySelectorAll('.filter .tag');
 var headerSelectedText = document.querySelector('.posts .selectlist__selected');
 var headerOptionsList = document.querySelector('.posts .selectlist__options');
 var headerOptions = document.querySelectorAll('.posts .selectlist__options li');
 var roadmapBtn = document.querySelector('.roadmap__link');
 var addPostOverlayBtn = document.querySelector('.posts__header .btn');
-var postsContainer = document.querySelector('.posts__body'); //show post numbers
+var postsContainer = document.querySelector('.posts__body'); //show posts
+
+(0, _showPosts.default)(suggestionPosts); //show post numbers
 
 (0, _showNumbers.default)(suggestionPosts.length, plannedPosts.length, progressPosts.length, livePosts.length); //Listeners for filter tags
 
@@ -834,7 +971,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49431" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57785" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

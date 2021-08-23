@@ -5,6 +5,12 @@
 	display: flex;
 	gap: 2em;
 	align-items: flex-start;
+	cursor: pointer;
+	transition: transform 170ms ease-in-out;
+
+	&:hover {
+		transform: scale(1.03);
+	}
 
 	& + & {
 		margin-top: 2em;

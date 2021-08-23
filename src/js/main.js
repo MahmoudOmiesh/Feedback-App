@@ -11,6 +11,8 @@ export const suggestionPosts = data.productRequests.filter(post => {
 	return post.status === 'suggestion';
 });
 
+export const currentUser = data.currentUser;
+
 const roadmapPosts = data.productRequests.filter(post => {
 	return (
 		post.status === 'planned' ||
@@ -25,10 +27,6 @@ const progressPosts = roadmapPosts.filter(
 );
 const livePosts = roadmapPosts.filter(post => post.status === 'live');
 
-//show posts
-
-showPosts(suggestionPosts);
-
 const filterTags = document.querySelectorAll('.filter .tag');
 const headerSelectedText = document.querySelector(
 	'.posts .selectlist__selected'
@@ -41,6 +39,10 @@ const roadmapBtn = document.querySelector('.roadmap__link');
 
 const addPostOverlayBtn = document.querySelector('.posts__header .btn');
 const postsContainer = document.querySelector('.posts__body');
+
+//show posts
+
+showPosts(suggestionPosts);
 
 //show post numbers
 

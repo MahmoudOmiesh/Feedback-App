@@ -30,6 +30,12 @@
 		padding: 0 0 0 1.5em;
 	}
 
+	&.btn-text {
+		background: none;
+		color: var(--clr-primary-400);
+		padding: 0;
+	}
+
 	&.btn-back {
 		@include pseudo(before, url(../assets/shared/icon-arrow-left.svg)) {
 			left: 0;
