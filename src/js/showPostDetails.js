@@ -92,6 +92,9 @@ function addDetailsEvents() {
 	const postDetails = document.querySelector('.details');
 	const replyBtns = postDetails.querySelectorAll('.comment .btn-text');
 	const sendBtns = postDetails.querySelectorAll('.comment__reply-send');
+	const commentBtn = postDetails.querySelector(
+		'.details__add-footer .btn-primary'
+	);
 
 	replyBtns.forEach(btn =>
 		btn.addEventListener('click', e => {
@@ -101,7 +104,9 @@ function addDetailsEvents() {
 		})
 	);
 
-	sendBtns.forEach(btn => btn.addEventListener('click', e => addReply(e)));
+	sendBtns.forEach(btn => btn.addEventListener('click', addReply));
+
+	commentBtn.addEventListener('click', addComment);
 }
 
 function addReply(e) {
@@ -153,6 +158,63 @@ function addReply(e) {
 	e.currentTarget.previousElementSibling.value = '';
 }
 
-// TODO : Add comments
+function addComment(e) {
+	const postDivIdx =
+		+e.currentTarget.parentElement.parentElement.previousElementSibling
+			.previousElementSibling.dataset.id;
+
+	const commentText =
+		e.currentTarget.parentElement.previousElementSibling.value;
+
+	const commentContainer =
+		e.currentTarget.parentElement.parentElement.previousElementSibling;
+
+	let randomCommentId = Math.floor(Math.random() * (1000 - 7 + 1)) + 7;
+
+	const newCommentObj = {
+		id: randomCommentId,
+		content: commentText,
+		user: currentUser,
+	};
+
+	suggestionPosts.filter(post => {
+		if (post.id === postDivIdx) {
+			if (!post.comments) post.comments = [];
+
+			post.comments.push(newCommentObj);
+		}
+	});
+
+	const imgSrc = `image-${newCommentObj.user.name.split(' ')[0].toLowerCase()}`;
+
+	const commentDiv = document.createElement('div');
+	commentDiv.className = 'comment';
+	commentDiv.dataset.commentId = newCommentObj.id;
+	commentDiv.innerHTML = `
+		<img
+			src='${images[imgSrc]}'
+			alt='${newCommentObj.user.name}'
+			class='comment__user-pfp'
+		/>
+		<div class='comment__content'>
+			<h4 class='comment__user-name'>@${newCommentObj.user.name}</h4>
+			<p class='comment__user-at'>${newCommentObj.user.username}</p>
+			<p class='comment__text'>
+			${newCommentObj.content}
+			</p>
+			<div class="comment__reply">
+				<textarea placeholder="Replying to @${newCommentObj.user.username}" class="comment__reply-text"></textarea>
+				<button class="comment__reply-send btn btn-secondary">send</button>
+			</div>
+		</div>
+		<button class='btn btn-text'>Reply</button>
+	`;
+
+	commentContainer.appendChild(commentDiv);
+	addDetailsEvents();
+	e.currentTarget.parentElement.previousElementSibling.value = '';
+}
+
+// TODO : Add comments DONE .
 // TODO : Comment Images DONE .
 // TODO : Replies DONE .

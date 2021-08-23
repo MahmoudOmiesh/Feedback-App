@@ -469,16 +469,16 @@ function addDetailsEvents() {
   var postDetails = document.querySelector('.details');
   var replyBtns = postDetails.querySelectorAll('.comment .btn-text');
   var sendBtns = postDetails.querySelectorAll('.comment__reply-send');
+  var commentBtn = postDetails.querySelector('.details__add-footer .btn-primary');
   replyBtns.forEach(function (btn) {
     return btn.addEventListener('click', function (e) {
       e.currentTarget.previousElementSibling.querySelector('.comment__reply').classList.toggle('active');
     });
   });
   sendBtns.forEach(function (btn) {
-    return btn.addEventListener('click', function (e) {
-      return addReply(e);
-    });
+    return btn.addEventListener('click', addReply);
   });
+  commentBtn.addEventListener('click', addComment);
 }
 
 function addReply(e) {
@@ -508,7 +508,35 @@ function addReply(e) {
   commentDiv.after(newReplyDiv);
   e.currentTarget.parentElement.classList.remove('active');
   e.currentTarget.previousElementSibling.value = '';
-} // TODO : Add comments
+}
+
+function addComment(e) {
+  var postDivIdx = +e.currentTarget.parentElement.parentElement.previousElementSibling.previousElementSibling.dataset.id;
+  var commentText = e.currentTarget.parentElement.previousElementSibling.value;
+  var commentContainer = e.currentTarget.parentElement.parentElement.previousElementSibling;
+  var randomCommentId = Math.floor(Math.random() * (1000 - 7 + 1)) + 7;
+  var newCommentObj = {
+    id: randomCommentId,
+    content: commentText,
+    user: _main.currentUser
+  };
+
+  _main.suggestionPosts.filter(function (post) {
+    if (post.id === postDivIdx) {
+      if (!post.comments) post.comments = [];
+      post.comments.push(newCommentObj);
+    }
+  });
+
+  var imgSrc = "image-".concat(newCommentObj.user.name.split(' ')[0].toLowerCase());
+  var commentDiv = document.createElement('div');
+  commentDiv.className = 'comment';
+  commentDiv.dataset.commentId = newCommentObj.id;
+  commentDiv.innerHTML = "\n\t\t<img\n\t\t\tsrc='".concat(_.default[imgSrc], "'\n\t\t\talt='").concat(newCommentObj.user.name, "'\n\t\t\tclass='comment__user-pfp'\n\t\t/>\n\t\t<div class='comment__content'>\n\t\t\t<h4 class='comment__user-name'>@").concat(newCommentObj.user.name, "</h4>\n\t\t\t<p class='comment__user-at'>").concat(newCommentObj.user.username, "</p>\n\t\t\t<p class='comment__text'>\n\t\t\t").concat(newCommentObj.content, "\n\t\t\t</p>\n\t\t\t<div class=\"comment__reply\">\n\t\t\t\t<textarea placeholder=\"Replying to @").concat(newCommentObj.user.username, "\" class=\"comment__reply-text\"></textarea>\n\t\t\t\t<button class=\"comment__reply-send btn btn-secondary\">send</button>\n\t\t\t</div>\n\t\t</div>\n\t\t<button class='btn btn-text'>Reply</button>\n\t");
+  commentContainer.appendChild(commentDiv);
+  addDetailsEvents();
+  e.currentTarget.parentElement.previousElementSibling.value = '';
+} // TODO : Add comments DONE .
 // TODO : Comment Images DONE .
 // TODO : Replies DONE .
 },{"./main":"js/main.js","../assets/user-images/*.jpg":"assets/user-images/*.jpg"}],"js/showPosts.js":[function(require,module,exports) {
