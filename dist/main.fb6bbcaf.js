@@ -379,49 +379,49 @@ module.exports = {
 module.exports = "/icon-arrow-up.15c07bf3.svg";
 },{}],"assets/shared/icon-comments.svg":[function(require,module,exports) {
 module.exports = "/icon-comments.55e7345e.svg";
-},{}],"assets/user-images/image-george.jpg":[function(require,module,exports) {
-module.exports = "/image-george.c3e61098.jpg";
 },{}],"assets/user-images/image-anne.jpg":[function(require,module,exports) {
 module.exports = "/image-anne.fe6ad5ea.jpg";
 },{}],"assets/user-images/image-elijah.jpg":[function(require,module,exports) {
 module.exports = "/image-elijah.5ca0ca91.jpg";
-},{}],"assets/user-images/image-jackson.jpg":[function(require,module,exports) {
-module.exports = "/image-jackson.89922738.jpg";
+},{}],"assets/user-images/image-george.jpg":[function(require,module,exports) {
+module.exports = "/image-george.c3e61098.jpg";
 },{}],"assets/user-images/image-james.jpg":[function(require,module,exports) {
 module.exports = "/image-james.9cbf6bb1.jpg";
-},{}],"assets/user-images/image-judah.jpg":[function(require,module,exports) {
-module.exports = "/image-judah.e2109ace.jpg";
-},{}],"assets/user-images/image-ryan.jpg":[function(require,module,exports) {
-module.exports = "/image-ryan.c0c4ef0f.jpg";
+},{}],"assets/user-images/image-jackson.jpg":[function(require,module,exports) {
+module.exports = "/image-jackson.89922738.jpg";
 },{}],"assets/user-images/image-javier.jpg":[function(require,module,exports) {
 module.exports = "/image-javier.8c7b9963.jpg";
-},{}],"assets/user-images/image-roxanne.jpg":[function(require,module,exports) {
-module.exports = "/image-roxanne.95295f4e.jpg";
+},{}],"assets/user-images/image-ryan.jpg":[function(require,module,exports) {
+module.exports = "/image-ryan.c0c4ef0f.jpg";
 },{}],"assets/user-images/image-suzanne.jpg":[function(require,module,exports) {
 module.exports = "/image-suzanne.281c9b2d.jpg";
 },{}],"assets/user-images/image-thomas.jpg":[function(require,module,exports) {
 module.exports = "/image-thomas.2da7ef2f.jpg";
 },{}],"assets/user-images/image-victoria.jpg":[function(require,module,exports) {
 module.exports = "/image-victoria.0cb39844.jpg";
+},{}],"assets/user-images/image-roxanne.jpg":[function(require,module,exports) {
+module.exports = "/image-roxanne.95295f4e.jpg";
+},{}],"assets/user-images/image-judah.jpg":[function(require,module,exports) {
+module.exports = "/image-judah.e2109ace.jpg";
 },{}],"assets/user-images/image-zena.jpg":[function(require,module,exports) {
 module.exports = "/image-zena.8d6fb0c4.jpg";
 },{}],"assets/user-images/*.jpg":[function(require,module,exports) {
 module.exports = {
-  "image-george": require("./image-george.jpg"),
   "image-anne": require("./image-anne.jpg"),
   "image-elijah": require("./image-elijah.jpg"),
-  "image-jackson": require("./image-jackson.jpg"),
+  "image-george": require("./image-george.jpg"),
   "image-james": require("./image-james.jpg"),
-  "image-judah": require("./image-judah.jpg"),
-  "image-ryan": require("./image-ryan.jpg"),
+  "image-jackson": require("./image-jackson.jpg"),
   "image-javier": require("./image-javier.jpg"),
-  "image-roxanne": require("./image-roxanne.jpg"),
+  "image-ryan": require("./image-ryan.jpg"),
   "image-suzanne": require("./image-suzanne.jpg"),
   "image-thomas": require("./image-thomas.jpg"),
   "image-victoria": require("./image-victoria.jpg"),
+  "image-roxanne": require("./image-roxanne.jpg"),
+  "image-judah": require("./image-judah.jpg"),
   "image-zena": require("./image-zena.jpg")
 };
-},{"./image-george.jpg":"assets/user-images/image-george.jpg","./image-anne.jpg":"assets/user-images/image-anne.jpg","./image-elijah.jpg":"assets/user-images/image-elijah.jpg","./image-jackson.jpg":"assets/user-images/image-jackson.jpg","./image-james.jpg":"assets/user-images/image-james.jpg","./image-judah.jpg":"assets/user-images/image-judah.jpg","./image-ryan.jpg":"assets/user-images/image-ryan.jpg","./image-javier.jpg":"assets/user-images/image-javier.jpg","./image-roxanne.jpg":"assets/user-images/image-roxanne.jpg","./image-suzanne.jpg":"assets/user-images/image-suzanne.jpg","./image-thomas.jpg":"assets/user-images/image-thomas.jpg","./image-victoria.jpg":"assets/user-images/image-victoria.jpg","./image-zena.jpg":"assets/user-images/image-zena.jpg"}],"js/showPostDetails.js":[function(require,module,exports) {
+},{"./image-anne.jpg":"assets/user-images/image-anne.jpg","./image-elijah.jpg":"assets/user-images/image-elijah.jpg","./image-george.jpg":"assets/user-images/image-george.jpg","./image-james.jpg":"assets/user-images/image-james.jpg","./image-jackson.jpg":"assets/user-images/image-jackson.jpg","./image-javier.jpg":"assets/user-images/image-javier.jpg","./image-ryan.jpg":"assets/user-images/image-ryan.jpg","./image-suzanne.jpg":"assets/user-images/image-suzanne.jpg","./image-thomas.jpg":"assets/user-images/image-thomas.jpg","./image-victoria.jpg":"assets/user-images/image-victoria.jpg","./image-roxanne.jpg":"assets/user-images/image-roxanne.jpg","./image-judah.jpg":"assets/user-images/image-judah.jpg","./image-zena.jpg":"assets/user-images/image-zena.jpg"}],"js/showPostDetails.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -436,6 +436,8 @@ var _ = _interopRequireDefault(require("../assets/user-images/*.jpg"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function showPostDetails(e) {
+  var hideDiv = document.querySelector('.hide-div');
+  var postDetails = document.querySelector('.details');
   var clickedPostDiv = e.currentTarget.cloneNode(true);
 
   var clickedPostData = _main.suggestionPosts.filter(function (post) {
@@ -458,9 +460,9 @@ function showPostDetails(e) {
     });
   }
 
-  var postDetails = document.querySelector('.details');
   postDetails.classList.add('active');
-  postDetails.innerHTML = "\n\t  <div class=\"details__content\">\n\t  <div class=\"details__header\">\n\t    <button class=\"btn btn-transparent btn-back\">go back</button>\n\t    <button class=\"btn btn-secondary\">edit feedback</button>\n\t  </div>\n\t  <div class=\"details__comments\">\n\t    <h3 class=\"details__comments-count\">".concat(clickedPostData.comments ? clickedPostData.comments.length : 0, " Comments</h3>\n      ").concat(postComments, "\n\t  </div>\n\t  <div class=\"details__add\">\n\t    <h4 class=\"details__add-title\">Add Comment</h4>\n\t    <textarea\n\t      placeholder=\"Place your comment here\"\n\t      class=\"details__add-text\"\n\t    ></textarea>\n\t    <div class=\"details__add-footer\">\n\t      <p class=\"details__add-letters\">0 / 250</p>\n\t      <button class=\"btn btn-primary\">post comment</button>\n\t    </div>\n\t  </div>\n\t</div>\n\t");
+  hideDiv.style.display = 'none';
+  postDetails.innerHTML = "\n\t  <div class=\"details__content\">\n\t  <div class=\"details__header\">\n\t    <button class=\"btn btn-transparent btn-back\">go back</button>\n\t    <button class=\"btn btn-secondary\">edit feedback</button>\n\t  </div>\n\t  <div class=\"details__comments\">\n\t    <h3 class=\"details__comments-count\">".concat(clickedPostData.comments ? clickedPostData.comments.length : 0, " Comments</h3>\n      ").concat(postComments, "\n\t  </div>\n\t  <div class=\"details__add\">\n\t    <h4 class=\"details__add-title\">Add Comment</h4>\n\t    <textarea\n\t      placeholder=\"Place your comment here\"\n\t      class=\"details__add-text\"\n\t    ></textarea>\n\t    <div class=\"details__add-footer\">\n\t      <p class=\"details__add-letters\"><span>0</span> / 250</p>\n\t      <button class=\"btn btn-primary\">post comment</button>\n\t    </div>\n\t  </div>\n\t</div>\n\t");
   postDetails.querySelector('.details__header').after(clickedPostDiv);
   addDetailsEvents();
 }
@@ -470,6 +472,8 @@ function addDetailsEvents() {
   var replyBtns = postDetails.querySelectorAll('.comment .btn-text');
   var sendBtns = postDetails.querySelectorAll('.comment__reply-send');
   var commentBtn = postDetails.querySelector('.details__add-footer .btn-primary');
+  var goBackBtn = postDetails.querySelector('.btn-back');
+  var commentField = postDetails.querySelector('.details__add-text');
   replyBtns.forEach(function (btn) {
     return btn.addEventListener('click', function (e) {
       e.currentTarget.previousElementSibling.querySelector('.comment__reply').classList.toggle('active');
@@ -479,6 +483,8 @@ function addDetailsEvents() {
     return btn.addEventListener('click', addReply);
   });
   commentBtn.addEventListener('click', addComment);
+  goBackBtn.addEventListener('click', HideOverlay);
+  commentField.addEventListener('input', countLetters);
 }
 
 function addReply(e) {
@@ -536,9 +542,21 @@ function addComment(e) {
   commentContainer.appendChild(commentDiv);
   addDetailsEvents();
   e.currentTarget.parentElement.previousElementSibling.value = '';
-} // TODO : Add comments DONE .
-// TODO : Comment Images DONE .
-// TODO : Replies DONE .
+}
+
+function HideOverlay() {
+  var postDetails = document.querySelector('.details');
+  var hideDiv = document.querySelector('.hide-div');
+  postDetails.innerHTML = '';
+  postDetails.classList.remove('active');
+  hideDiv.style.display = 'block';
+}
+
+function countLetters(e) {
+  var countText = document.querySelector('.details__add-letters span');
+  countText.textContent = e.target.value.length;
+  if (e.target.value.length >= 250) e.target.value = e.target.value.substring(0, e.target.value.length - 1);
+}
 },{"./main":"js/main.js","../assets/user-images/*.jpg":"assets/user-images/*.jpg"}],"js/showPosts.js":[function(require,module,exports) {
 "use strict";
 
@@ -999,7 +1017,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57785" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57184" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

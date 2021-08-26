@@ -2,6 +2,8 @@ import { suggestionPosts, currentUser } from './main';
 import images from '../assets/user-images/*.jpg';
 
 export default function showPostDetails(e) {
+	const hideDiv = document.querySelector('.hide-div');
+	const postDetails = document.querySelector('.details');
 	const clickedPostDiv = e.currentTarget.cloneNode(true);
 	const clickedPostData = suggestionPosts.filter(
 		post => post.id === +clickedPostDiv.dataset.id
@@ -56,8 +58,8 @@ export default function showPostDetails(e) {
 			}
 		});
 	}
-	const postDetails = document.querySelector('.details');
 	postDetails.classList.add('active');
+	hideDiv.style.display = 'none';
 	postDetails.innerHTML = `
 	  <div class="details__content">
 	  <div class="details__header">
@@ -77,7 +79,7 @@ export default function showPostDetails(e) {
 	      class="details__add-text"
 	    ></textarea>
 	    <div class="details__add-footer">
-	      <p class="details__add-letters">0 / 250</p>
+	      <p class="details__add-letters"><span>0</span> / 250</p>
 	      <button class="btn btn-primary">post comment</button>
 	    </div>
 	  </div>
@@ -95,6 +97,8 @@ function addDetailsEvents() {
 	const commentBtn = postDetails.querySelector(
 		'.details__add-footer .btn-primary'
 	);
+	const goBackBtn = postDetails.querySelector('.btn-back');
+	const commentField = postDetails.querySelector('.details__add-text');
 
 	replyBtns.forEach(btn =>
 		btn.addEventListener('click', e => {
@@ -107,6 +111,10 @@ function addDetailsEvents() {
 	sendBtns.forEach(btn => btn.addEventListener('click', addReply));
 
 	commentBtn.addEventListener('click', addComment);
+
+	goBackBtn.addEventListener('click', HideOverlay);
+
+	commentField.addEventListener('input', countLetters);
 }
 
 function addReply(e) {
@@ -215,6 +223,19 @@ function addComment(e) {
 	e.currentTarget.parentElement.previousElementSibling.value = '';
 }
 
-// TODO : Add comments DONE .
-// TODO : Comment Images DONE .
-// TODO : Replies DONE .
+function HideOverlay() {
+	const postDetails = document.querySelector('.details');
+	const hideDiv = document.querySelector('.hide-div');
+
+	postDetails.innerHTML = '';
+	postDetails.classList.remove('active');
+	hideDiv.style.display = 'block';
+}
+
+function countLetters(e) {
+	const countText = document.querySelector('.details__add-letters span');
+	countText.textContent = e.target.value.length;
+
+	if (e.target.value.length >= 250)
+		e.target.value = e.target.value.substring(0, e.target.value.length - 1);
+}
